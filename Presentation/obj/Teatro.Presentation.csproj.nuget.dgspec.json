@@ -1,0 +1,257 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Presentation\\Teatro.Presentation.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj",
+        "projectName": "Teatro.Business",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj"
+              },
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj",
+        "projectName": "Teatro.Data",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj",
+        "projectName": "Teatro.Models",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Presentation\\Teatro.Presentation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Presentation\\Teatro.Presentation.csproj",
+        "projectName": "Teatro.Presentation",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Presentation\\Teatro.Presentation.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Presentation\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
