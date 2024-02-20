@@ -9,5 +9,5 @@ public class Reserva
     public Usuario? Usuario { get; set; }
     public int UsuarioId { get; set; }
 
-    public List<ReservaSala> ListSalas { get; set; } = new List<ReservaSala>();
+    public List<DetalleReserva> Detalles { get; set; } = new List<DetalleReserva>();
 }

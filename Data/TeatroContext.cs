@@ -13,41 +13,26 @@ public class TeatroContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        //Relaciones entre Reservas y Sala
-        modelBuilder.Entity<ReservaSala>()
-            .HasKey(obj => new { obj.SalaId, obj.ReservaId });
+        //Relaciones entre Reservas y DetalleReserva
+        modelBuilder.Entity<DetalleReserva>()
+            .HasKey(obj => new { obj.ReservaId, obj.ObraId });
 
-        modelBuilder.Entity<ReservaSala>()
+        modelBuilder.Entity<DetalleReserva>()
           .HasOne(obj => obj.Reserva)
-          .WithMany(p => p.ListSalas)
+          .WithMany(p => p.Detalles)
           .HasForeignKey(pp => pp.ReservaId);
 
-        modelBuilder.Entity<ReservaSala>()
-            .HasOne(pp => pp.Sala)
-            .WithMany()
-            .HasForeignKey(pp => pp.SalaId);
-
-        //Relaciones entre Sala y Detalle Sala
-        modelBuilder.Entity<DetalleSala>()
-            .HasKey(obj => new { obj.SalaId, obj.ObraId });
-
-        modelBuilder.Entity<DetalleSala>()
-            .HasOne(obj => obj.Sala)
-            .WithMany(p => p.Detalles)
-            .HasForeignKey(pp => pp.SalaId);
-
-        modelBuilder.Entity<DetalleSala>()
+        modelBuilder.Entity<DetalleReserva>()
             .HasOne(pp => pp.Obra)
             .WithMany()
             .HasForeignKey(pp => pp.ObraId);
+
 
     }
 
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Reserva> Reservas { get; set; }
-    public DbSet<ReservaSala> ReservaSalas { get; set; }
-    public DbSet<Sala> Salas { get; set; }
-    public DbSet<DetalleSala> DetalleSalas { get; set; }
+    public DbSet<DetalleReserva> DetalleReservas { get; set; }
     public DbSet<Obra> Obras { get; set; }
     public DbSet<Asiento> Asientos { get; set; }
 }

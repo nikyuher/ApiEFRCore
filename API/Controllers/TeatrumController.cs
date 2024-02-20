@@ -19,12 +19,14 @@ public class TeatrumApiController : ControllerBase
         _usuarioService = usuarioService;
     }
 
+
+    //Obras
     [HttpGet("obras")]
     public ActionResult<List<Obra>> GetAllObra() => _obraService.GetAllObras();
 
     [HttpGet("obras/{id}")]
 
-    public ActionResult<Obra> GetPizzaId(int id)
+    public ActionResult<Obra> GetObraId(int id)
     {
         var obra = _obraService.GetIdObra(id);
 
@@ -35,7 +37,7 @@ public class TeatrumApiController : ControllerBase
     }
 
     [HttpPost("obras/create")]
-    public IActionResult CreatePizza(Obra obra)
+    public IActionResult CreateObra(Obra obra)
     {
         _obraService.CreateObra(obra);
         return Ok(obra);
@@ -60,7 +62,7 @@ public class TeatrumApiController : ControllerBase
     }
 
     [HttpDelete("obras/delete/{id}")]
-    public IActionResult DeletePizza(int id)
+    public IActionResult DeleteObra(int id)
     {
         var obra = _obraService.GetIdObra(id);
 
@@ -71,4 +73,60 @@ public class TeatrumApiController : ControllerBase
 
         return Ok();
     }
+
+    //Usuario
+
+    [HttpGet("usuarios")]
+    public ActionResult<List<Usuario>> GetAllUsuario() => _usuarioService.GetAllUsuarios();
+
+    [HttpGet("usuario/{id}")]
+
+    public ActionResult<Usuario> GetUsuarioId(int id)
+    {
+        var user = _usuarioService.GetIdUsuario(id);
+
+        if (user == null)
+            return NotFound();
+
+        return user;
+    }
+
+    [HttpPost("usuario/create")]
+    public IActionResult CreateUsuario(Usuario user)
+    {
+        _usuarioService.CreateUsuario(user);
+        return Ok(user);
+    }
+
+    [HttpPut("usuario/update")]
+    public IActionResult UpdateUsuario(int id, Usuario user)
+    {
+
+        if (id != user.UsuarioId)
+            return BadRequest();
+
+        var existingUser = _usuarioService.GetIdUsuario(id);
+
+        if (existingUser is null)
+            return NotFound();
+
+        _usuarioService.UpdateUsuario(user);
+
+        return Ok(user);
+
+    }
+
+    [HttpDelete("usuario/delete/{id}")]
+    public IActionResult DeleteUsuario(int id)
+    {
+        var user = _usuarioService.GetIdUsuario(id);
+
+        if (user is null)
+            return NotFound();
+
+        _usuarioService.DeleteUsuario(id);
+
+        return Ok();
+    }
+
 }

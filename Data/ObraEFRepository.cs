@@ -40,7 +40,6 @@ public class ObraEFRepository : IObraRepository
 
     public void UpdateObra(Obra obra)
     {
-
         var update = GetIdObra(obra.ObraId);
 
         if (update is null)
@@ -61,9 +60,9 @@ public class ObraEFRepository : IObraRepository
             throw new InvalidOperationException($"No se encontro la Obra con el id {idObra}");
         }
 
-        var DetalleSala = _context.DetalleSalas.Where(ob => ob.ObraId == idObra);
+        var DetalleSala = _context.DetalleReservas.Where(ob => ob.ObraId == idObra);
 
-        _context.DetalleSalas.RemoveRange(DetalleSala);
+        _context.DetalleReservas.RemoveRange(DetalleSala);
         _context.Obras.Remove(obra);
         SaveChanges();
     }
