@@ -12,10 +12,13 @@ var connectionString = builder.Configuration.GetConnectionString("TeatroDB");
 
 
 //EFCore Usuario
+
+//Obras
 builder.Services.AddDbContext<TeatroContext>(options =>
   options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
 
+//Usuarios
 builder.Services.AddDbContext<TeatroContext>(options =>
   options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioEFRepository>();
@@ -42,16 +45,16 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<TeatroContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        throw new Exception("Error durante la migración de la base de datos.", ex);
-    }
+  var services = scope.ServiceProvider;
+  try
+  {
+    var context = services.GetRequiredService<TeatroContext>();
+    context.Database.Migrate();
+  }
+  catch (Exception ex)
+  {
+    throw new Exception("Error durante la migración de la base de datos.", ex);
+  }
 }
 
 app.Run();
