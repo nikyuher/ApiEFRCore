@@ -10,6 +10,6 @@ public class Usuario
     public string? CorreoElectronico { get; set; }
     public string? Contraseña { get; set; }
 
-    public List<Reserva>? ListReservas { get; set; }
+    public List<Reserva> ListReservas { get; set; } = new List<Reserva>();
 }
 

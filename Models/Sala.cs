@@ -8,5 +8,5 @@ public class Sala
     
     public string? NombreSala { get; set; }
 
-    public List<DetalleSala>? Detalles { get; set; }
+    public List<DetalleSala> Detalles { get; set; } = new List<DetalleSala>();
 }
