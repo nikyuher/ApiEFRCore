@@ -1,4 +1,13 @@
+using Teatro.Data;
+using Teatro.Business;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("TeatroDB");
 
 // Add services to the container.
 
