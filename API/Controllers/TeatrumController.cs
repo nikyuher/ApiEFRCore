@@ -10,11 +10,13 @@ public class TeatrumApiController : ControllerBase
 {
     private readonly ILogger<TeatrumApiController> _logger;
     private readonly IObraServices _obraService;
+    private readonly IUsuarioServices _usuarioService;
 
-    public TeatrumApiController(ILogger<TeatrumApiController> logger, IObraServices obraService)
+    public TeatrumApiController(ILogger<TeatrumApiController> logger, IObraServices obraService, IUsuarioServices usuarioService)
     {
         _logger = logger;
         _obraService = obraService;
+        _usuarioService = usuarioService;
     }
 
     [HttpGet("obras")]
