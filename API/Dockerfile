@@ -16,4 +16,4 @@ WORKDIR /app
 COPY --from=build /app/API/out .
 
 EXPOSE 80
-ENTRYPOINT ["dotnet", "Teatro.Api.dll"]
+ENTRYPOINT ["dotnet", "Teatro.API.dll"]
