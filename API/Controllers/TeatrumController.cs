@@ -78,7 +78,7 @@ public class TeatrumApiController : ControllerBase
     //Usuario
 
     [HttpGet("usuarios")]
-    public ActionResult<List<Usuario>> GetAllUsuario() => _usuarioService.GetAllUsuarios();
+    public ActionResult<List<UsuarioGetDTO>> GetAllUsuario() => _usuarioService.GetAllUsuarios();
 
     [HttpGet("usuarios/{id}")]
 
@@ -93,7 +93,7 @@ public class TeatrumApiController : ControllerBase
     }
 
     [HttpPost("usuarios/create")]
-    public IActionResult CreateUsuario(Usuario user)
+    public IActionResult CreateUsuario(UsuarioAddDTO user)
     {
         _usuarioService.CreateUsuario(user);
         return Ok(user);
@@ -152,7 +152,7 @@ public class TeatrumApiController : ControllerBase
     {
 
 
-        _usuarioService.CreateReserva(IdUser,reserva);
+        _usuarioService.CreateReserva(IdUser, reserva);
         return Ok(reserva);
     }
 
@@ -184,4 +184,12 @@ public class TeatrumApiController : ControllerBase
         return Ok();
     }
 
+
+    [HttpPost("usuario/reserva/detalle")]
+    public IActionResult AgregarDetalle(int idReserva, int idObra, List<Asiento> asientos)
+    {
+      _obraService.AgregarDetalleReserva(idReserva,idObra,asientos);
+
+        return Ok();
+    }
 }

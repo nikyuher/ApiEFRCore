@@ -12,14 +12,28 @@ public class UsuarioEFRepository : IUsuarioRepository
         _context = context;
     }
 
-    public List<Usuario> GetAllUsuarios()
+    public List<UsuarioGetDTO> GetAllUsuarios()
     {
-        return _context.Usuarios.ToList();
+        var usuarios = _context.Usuarios
+                        .Include(p => p.ListReservas)
+                            .ThenInclude(pi => pi.Detalles)
+                        .ToList();
+
+        var usuariosDTO = usuarios.Select(usuario => new UsuarioGetDTO
+        {
+            UsuarioId = usuario.UsuarioId,
+            Nombre = usuario.Nombre,
+            CorreoElectronico = usuario.CorreoElectronico,
+            Contraseña = usuario.Contraseña,
+            ListReservas = usuario.ListReservas 
+        }).ToList();
+
+        return usuariosDTO;
     }
 
     public List<Reserva> GetAllReservas()
     {
-        return _context.Reservas.ToList();
+        return _context.Reservas.Include(p => p.Detalles).ToList();
     }
 
     public Usuario GetIdUsuario(int idUsuario)
@@ -59,8 +73,15 @@ public class UsuarioEFRepository : IUsuarioRepository
     }
 
 
-    public void CreateUsuario(Usuario usuario)
+    public void CreateUsuario(UsuarioAddDTO usuarioDto)
     {
+        var usuario = new Usuario
+        {
+            Nombre = usuarioDto.Nombre,
+            CorreoElectronico = usuarioDto.CorreoElectronico,
+            Contraseña = usuarioDto.Contraseña
+        };
+
         _context.Usuarios.Add(usuario);
         SaveChanges();
     }

@@ -8,5 +8,7 @@ public interface IObraRepository
     void CreateObra(Obra obra);
     void UpdateObra(Obra obra);
     void DeleteObra(int idObra);
+
+    void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos);
     void SaveChanges();
 }

@@ -4,14 +4,14 @@ using Teatro.Models;
 
 public interface IUsuarioRepository
 {
-    public List<Usuario> GetAllUsuarios();
+    public List<UsuarioGetDTO> GetAllUsuarios();
     public List<Reserva> GetAllReservas();
     public List<Reserva> GetReservasUsuario(int usuarioId);
 
     public Usuario GetIdUsuario(int idUsuario);
     public Reserva GetIdReserva(int idReserva);
 
-    void CreateUsuario(Usuario usuario);
+    void CreateUsuario(UsuarioAddDTO usuarioDto);
     void CreateReserva(int usuarioId, Reserva reserva);
 
     void UpdateUsuario(Usuario usuario);

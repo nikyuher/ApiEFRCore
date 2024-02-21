@@ -15,7 +15,7 @@ public class UsuarioServices : IUsuarioServices
     }
 
 
-    public List<Usuario> GetAllUsuarios()
+    public List<UsuarioGetDTO> GetAllUsuarios()
     {
         return _usuarioRepository.GetAllUsuarios();
     }
@@ -40,7 +40,7 @@ public class UsuarioServices : IUsuarioServices
         return _usuarioRepository.GetIdReserva(idReserva);
     }
 
-    public void CreateUsuario(Usuario usuario)
+    public void CreateUsuario(UsuarioAddDTO usuario)
     {
         _usuarioRepository.CreateUsuario(usuario);
     }
