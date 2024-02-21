@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Teatro.Business;
 using Teatro.Models;
@@ -79,7 +80,7 @@ public class TeatrumApiController : ControllerBase
     [HttpGet("usuarios")]
     public ActionResult<List<Usuario>> GetAllUsuario() => _usuarioService.GetAllUsuarios();
 
-    [HttpGet("usuario/{id}")]
+    [HttpGet("usuarios/{id}")]
 
     public ActionResult<Usuario> GetUsuarioId(int id)
     {
@@ -91,14 +92,14 @@ public class TeatrumApiController : ControllerBase
         return user;
     }
 
-    [HttpPost("usuario/create")]
+    [HttpPost("usuarios/create")]
     public IActionResult CreateUsuario(Usuario user)
     {
         _usuarioService.CreateUsuario(user);
         return Ok(user);
     }
 
-    [HttpPut("usuario/update")]
+    [HttpPut("usuarios/update")]
     public IActionResult UpdateUsuario(int id, Usuario user)
     {
 
@@ -116,7 +117,7 @@ public class TeatrumApiController : ControllerBase
 
     }
 
-    [HttpDelete("usuario/delete/{id}")]
+    [HttpDelete("usuarios/delete/{id}")]
     public IActionResult DeleteUsuario(int id)
     {
         var user = _usuarioService.GetIdUsuario(id);
@@ -125,6 +126,60 @@ public class TeatrumApiController : ControllerBase
             return NotFound();
 
         _usuarioService.DeleteUsuario(id);
+
+        return Ok();
+    }
+
+    //Reserva
+
+    [HttpGet("usuarios/reservas")]
+    public ActionResult<List<Reserva>> GetAllReserva() => _usuarioService.GetAllReservas();
+
+    [HttpGet("usuarios/{id}/reservas")]
+
+    public ActionResult<List<Reserva>> GetReservasUsuario(int id)
+    {
+        var reserva = _usuarioService.GetReservasUsuario(id);
+
+        if (reserva == null)
+            return NotFound();
+
+        return reserva;
+    }
+
+    [HttpPost("usuarios/create/reservas/{IdUser}")]
+    public IActionResult CreateReserva(int IdUser, Reserva reserva)
+    {
+
+
+        _usuarioService.CreateReserva(IdUser,reserva);
+        return Ok(reserva);
+    }
+
+    [HttpPut("usuarios/update/reservas")]
+    public IActionResult UpdateReserva(int id, Reserva reserva)
+    {
+
+        var existingUser = _usuarioService.GetIdUsuario(id);
+
+        if (existingUser is null)
+            return NotFound();
+
+        _usuarioService.UpdateReserva(reserva);
+
+        return Ok(reserva);
+
+    }
+
+    [HttpDelete("usuarios/delete/reservas/{id}")]
+    public IActionResult DeleteReserva(int id)
+    {
+        var user = _usuarioService.GetIdReserva(id);
+
+        if (user is null)
+            return NotFound();
+
+        _usuarioService.DeleteReserva(id);
 
         return Ok();
     }

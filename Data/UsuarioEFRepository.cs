@@ -1,5 +1,6 @@
 namespace Teatro.Data;
 
+using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
 public class UsuarioEFRepository : IUsuarioRepository
@@ -16,6 +17,11 @@ public class UsuarioEFRepository : IUsuarioRepository
         return _context.Usuarios.ToList();
     }
 
+    public List<Reserva> GetAllReservas()
+    {
+        return _context.Reservas.ToList();
+    }
+
     public Usuario GetIdUsuario(int idUsuario)
     {
         var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == idUsuario);
@@ -28,12 +34,50 @@ public class UsuarioEFRepository : IUsuarioRepository
         return usuario;
     }
 
+    public Reserva GetIdReserva(int idReserva)
+    {
+        var reserva = _context.Reservas.FirstOrDefault(u => u.ReservaId == idReserva);
+
+        if (reserva is null)
+        {
+            throw new InvalidOperationException($"No se encontro la Reserva con el ID {idReserva}");
+        }
+
+        return reserva;
+    }
+
+    public List<Reserva> GetReservasUsuario(int usuarioId)
+    {
+        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == usuarioId);
+
+        if (usuario == null)
+        {
+            throw new InvalidOperationException($"No se encontró ningún usuario con el Id {usuarioId}.");
+        }
+
+        return usuario.ListReservas.ToList();
+    }
+
+
     public void CreateUsuario(Usuario usuario)
     {
         _context.Usuarios.Add(usuario);
         SaveChanges();
     }
 
+    public void CreateReserva(int usuarioId, Reserva reserva)
+    {
+        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == usuarioId);
+
+        if (usuario == null)
+        {
+            throw new InvalidOperationException($"No se encontró ningún usuario con el Id {usuarioId}.");
+        }
+
+        usuario.ListReservas.Add(reserva);
+        SaveChanges();
+    }
+    
     public void UpdateUsuario(Usuario usuario)
     {
         var update = GetIdUsuario(usuario.UsuarioId);
@@ -47,6 +91,19 @@ public class UsuarioEFRepository : IUsuarioRepository
         SaveChanges();
     }
 
+    public void UpdateReserva(Reserva reserva)
+    {
+        var update = GetIdReserva(reserva.ReservaId);
+
+        if (update is null)
+        {
+            throw new KeyNotFoundException($"No se encontró la reserva con el ID {reserva.ReservaId}.");
+        }
+
+        _context.Entry(update).CurrentValues.SetValues(reserva);
+        SaveChanges();
+    }
+
     public void DeleteUsuario(int idUsuario)
     {
         var usuario = GetIdUsuario(idUsuario);
@@ -56,10 +113,20 @@ public class UsuarioEFRepository : IUsuarioRepository
             throw new InvalidOperationException($"No se encontro el Usuario con el id {idUsuario}");
         }
 
-        var reserva = _context.Reservas.Where(r => r.UsuarioId == idUsuario);
-
-        _context.Reservas.RemoveRange(reserva);
         _context.Usuarios.Remove(usuario);
+        SaveChanges();
+    }
+
+    public void DeleteReserva(int idReserva)
+    {
+        var reserva = GetIdReserva(idReserva);
+
+        if (reserva is null)
+        {
+            throw new InvalidOperationException($"No se encontró la Reserva con el ID {idReserva}");
+        }
+
+        _context.Reservas.Remove(reserva);
         SaveChanges();
     }
 

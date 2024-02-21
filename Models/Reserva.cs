@@ -1,11 +1,13 @@
 namespace Teatro.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 public class Reserva
 {
     [Key]
     public int ReservaId { get; set; }
     
+    [JsonIgnore]
     public Usuario? Usuario { get; set; }
     public int UsuarioId { get; set; }
 

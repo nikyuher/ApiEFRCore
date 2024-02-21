@@ -12,7 +12,6 @@ public class TeatroContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
         //Relaciones entre Reservas y DetalleReserva
         modelBuilder.Entity<DetalleReserva>()
             .HasKey(obj => new { obj.ReservaId, obj.ObraId });
@@ -26,8 +25,6 @@ public class TeatroContext : DbContext
             .HasOne(pp => pp.Obra)
             .WithMany()
             .HasForeignKey(pp => pp.ObraId);
-
-
     }
 
     public DbSet<Usuario> Usuarios { get; set; }

@@ -1,40 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\API\\Teatro.API.csproj": {}
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\API\\Teatro.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\API\\Teatro.API.csproj": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\API\\Teatro.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\API\\Teatro.API.csproj",
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\API\\Teatro.API.csproj",
         "projectName": "Teatro.API",
-        "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\API\\Teatro.API.csproj",
-        "packagesPath": "C:\\Users\\S2-PC00\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\API\\obj\\",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\API\\Teatro.API.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\S2-PC00\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\Teatro.Business.csproj": {
-                "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\Teatro.Business.csproj"
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj"
               }
             }
           }
@@ -79,43 +72,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\Teatro.Business.csproj": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\Teatro.Business.csproj",
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj",
         "projectName": "Teatro.Business",
-        "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\Teatro.Business.csproj",
-        "packagesPath": "C:\\Users\\S2-PC00\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Business\\obj\\",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\Teatro.Business.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Business\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\S2-PC00\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\Teatro.Data.csproj": {
-                "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\Teatro.Data.csproj"
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj"
               },
-              "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj": {
-                "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj"
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj"
               }
             }
           }
@@ -145,40 +132,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\Teatro.Data.csproj": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\Teatro.Data.csproj",
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj",
         "projectName": "Teatro.Data",
-        "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\Teatro.Data.csproj",
-        "packagesPath": "C:\\Users\\S2-PC00\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Data\\obj\\",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\Teatro.Data.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Data\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\S2-PC00\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj": {
-                "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj"
+              "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
+                "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj"
               }
             }
           }
@@ -224,32 +205,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj": {
+    "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj",
+        "projectUniqueName": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj",
         "projectName": "Teatro.Models",
-        "projectPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\Teatro.Models.csproj",
-        "packagesPath": "C:\\Users\\S2-PC00\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\S2-PC00\\Documents\\ApiEFRCore\\Models\\obj\\",
+        "projectPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\Teatro.Models.csproj",
+        "packagesPath": "C:\\Users\\nico_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nico_\\Desktop\\ApiTeatro\\Models\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\S2-PC00\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nico_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -283,7 +258,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.417\\RuntimeIdentifierGraph.json"
         }
       }
     }
