@@ -30,9 +30,9 @@ public class UsuarioServices : IUsuarioServices
         return _usuarioRepository.GetReservasUsuario(usuarioId);
     }
 
-    public Usuario GetIdUsuario(int idUsuario)
+    public UsuarioGetDTO GetIdUsuario(int idUsuario)
     {
-        return _usuarioRepository.GetIdUsuario(idUsuario);
+        return _usuarioRepository.GetIdUsuarioDTO(idUsuario);
     }
 
     public Reserva GetIdReserva(int idReserva)
@@ -50,7 +50,7 @@ public class UsuarioServices : IUsuarioServices
         _usuarioRepository.CreateReserva(usuarioId, reserva);
     }
 
-    public void UpdateUsuario(Usuario usuario)
+    public void UpdateUsuario(UsuarioPutDTO usuario)
     {
         _usuarioRepository.UpdateUsuario(usuario);
     }

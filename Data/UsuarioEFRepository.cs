@@ -25,7 +25,7 @@ public class UsuarioEFRepository : IUsuarioRepository
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
             Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas 
+            ListReservas = usuario.ListReservas
         }).ToList();
 
         return usuariosDTO;
@@ -36,16 +36,40 @@ public class UsuarioEFRepository : IUsuarioRepository
         return _context.Reservas.Include(p => p.Detalles).ToList();
     }
 
-    public Usuario GetIdUsuario(int idUsuario)
+    public UsuarioGetDTO GetIdUsuarioDTO(int idUsuario)
     {
-        var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == idUsuario);
+        var usuario = _context.Usuarios
+                                .Include(p => p.ListReservas)
+                                    .ThenInclude(pi => pi.Detalles)
+                                .FirstOrDefault(u => u.UsuarioId == idUsuario);
 
         if (usuario is null)
         {
             throw new InvalidOperationException($"No se encontro al usuario con el ID {idUsuario}");
         }
 
-        return usuario;
+        var usuarioDTO = new UsuarioGetDTO
+        {
+            UsuarioId = usuario.UsuarioId,
+            Nombre = usuario.Nombre,
+            CorreoElectronico = usuario.CorreoElectronico,
+            Contraseña = usuario.Contraseña,
+            ListReservas = usuario.ListReservas
+        };
+
+        return usuarioDTO;
+    }
+
+    public Usuario GetIdUser(int idUser)
+    {
+        var user = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == idUser);
+
+        if (user is null)
+        {
+            throw new InvalidOperationException($"No se encontro la Reserva con el ID {idUser}");
+        }
+
+        return user;
     }
 
     public Reserva GetIdReserva(int idReserva)
@@ -98,17 +122,20 @@ public class UsuarioEFRepository : IUsuarioRepository
         usuario.ListReservas.Add(reserva);
         SaveChanges();
     }
-    
-    public void UpdateUsuario(Usuario usuario)
-    {
-        var update = GetIdUsuario(usuario.UsuarioId);
 
-        if (update is null)
+    public void UpdateUsuario(UsuarioPutDTO usuarioDto)
+    {
+        var usuario = GetIdUser(usuarioDto.UsuarioId);
+
+        if (usuario is null)
         {
-            throw new KeyNotFoundException("No se encontro la obra a actualizar.");
+            throw new KeyNotFoundException("No se encontró el usuario a actualizar.");
         }
 
-        _context.Entry(update).CurrentValues.SetValues(usuario);
+        usuario.Nombre = usuarioDto.Nombre;
+        usuario.CorreoElectronico = usuarioDto.CorreoElectronico;
+        usuario.Contraseña = usuarioDto.Contraseña;
+
         SaveChanges();
     }
 
@@ -127,7 +154,7 @@ public class UsuarioEFRepository : IUsuarioRepository
 
     public void DeleteUsuario(int idUsuario)
     {
-        var usuario = GetIdUsuario(idUsuario);
+        var usuario = GetIdUser(idUsuario);
 
         if (usuario is null)
         {

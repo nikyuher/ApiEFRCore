@@ -7,13 +7,13 @@ public interface IUsuarioServices
     public List<Reserva> GetAllReservas();
     public List<Reserva> GetReservasUsuario(int usuarioId);
 
-    public Usuario GetIdUsuario(int idUsuario);
+    public UsuarioGetDTO GetIdUsuario(int idUsuario);
     public Reserva GetIdReserva(int idReserva);
 
     void CreateUsuario(UsuarioAddDTO usuario);
     void CreateReserva(int usuarioId, Reserva reserva);
 
-    void UpdateUsuario(Usuario usuario);
+    void UpdateUsuario(UsuarioPutDTO usuario);
     void UpdateReserva(Reserva reserva);
 
     void DeleteUsuario(int idUsuario);

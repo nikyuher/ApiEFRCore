@@ -82,7 +82,7 @@ public class TeatrumApiController : ControllerBase
 
     [HttpGet("usuarios/{id}")]
 
-    public ActionResult<Usuario> GetUsuarioId(int id)
+    public ActionResult<UsuarioGetDTO> GetUsuarioId(int id)
     {
         var user = _usuarioService.GetIdUsuario(id);
 
@@ -100,7 +100,7 @@ public class TeatrumApiController : ControllerBase
     }
 
     [HttpPut("usuarios/update")]
-    public IActionResult UpdateUsuario(int id, Usuario user)
+    public IActionResult UpdateUsuario(int id, UsuarioPutDTO user)
     {
 
         if (id != user.UsuarioId)
