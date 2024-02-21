@@ -5,10 +5,16 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUsuarioServices, UsuarioServices>();
+builder.Services.AddScoped<IReservaServices, ReservaServices>();
 builder.Services.AddScoped<IObraServices, ObraServices>();
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("TeatroDB");
+var configuration = builder.Configuration;
+var environment = configuration["Environment"];
+
+var connectionString = environment == "Docker" ?
+    configuration.GetConnectionString("TeatroDBDocker") :
+    configuration.GetConnectionString("TeatroDBLocal");
 
 
 //EFCore Usuario
@@ -22,6 +28,11 @@ builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
 builder.Services.AddDbContext<TeatroContext>(options =>
   options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioEFRepository>();
+
+//Reserva
+builder.Services.AddDbContext<TeatroContext>(options =>
+  options.UseSqlServer(connectionString));
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
 // Add services to the container.
 

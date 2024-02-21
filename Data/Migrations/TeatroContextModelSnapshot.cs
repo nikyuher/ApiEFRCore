@@ -160,13 +160,11 @@ namespace Teatro.Data.Migrations
 
             modelBuilder.Entity("Teatro.Models.Reserva", b =>
                 {
-                    b.HasOne("Teatro.Models.Usuario", "Usuario")
+                    b.HasOne("Teatro.Models.Usuario", null)
                         .WithMany("ListReservas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Teatro.Models.DetalleReserva", b =>

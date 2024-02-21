@@ -5,7 +5,6 @@ public class DetalleReserva
 {
     public int ReservaId { get; set; }
     public int ObraId { get; set; }
-
     [JsonIgnore]
     public Reserva? Reserva { get; set; }
     public Obra? Obra { get; set; }
