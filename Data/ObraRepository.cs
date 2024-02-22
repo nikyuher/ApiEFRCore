@@ -5,11 +5,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks.Dataflow;
 using Teatro.Models;
 
-public class ObraEFRepository : IObraRepository
+public class ObraRepository : IObraRepository
 {
     private readonly TeatroContext _context;
 
-    public ObraEFRepository(TeatroContext context)
+    public ObraRepository(TeatroContext context)
     {
         _context = context;
     }
@@ -65,27 +65,6 @@ public class ObraEFRepository : IObraRepository
         _context.DetalleReservas.RemoveRange(DetalleSala);
         _context.Obras.Remove(obra);
         SaveChanges();
-    }
-
-    public void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos)
-    {
-        var reserva = _context.Reservas.FirstOrDefault(r => r.ReservaId == idReserva);
-        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == idObra);
-
-        if (reserva == null || obra == null)
-        {
-            throw new InvalidOperationException("No se encontró la reserva o la obra especificada.");
-        }
-
-        var detalleReserva = new DetalleReserva
-        {
-            Reserva = reserva,
-            Obra = obra,
-            Asientos = asientos
-        };
-
-        _context.DetalleReservas.Add(detalleReserva);
-        SaveChanges();  
     }
 
     public void SaveChanges()

@@ -71,11 +71,4 @@ public class ObraController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("usuario/reserva/detalle")]
-    public IActionResult AgregarDetalle(int idReserva, int idObra, List<Asiento> asientos)
-    {
-      _obraService.AgregarDetalleReserva(idReserva,idObra,asientos);
-
-        return Ok();
-    }
 }

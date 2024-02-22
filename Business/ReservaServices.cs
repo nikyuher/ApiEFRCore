@@ -13,7 +13,7 @@ public class ReservaServices : IReservaServices
     }
 
 
-    public List<Reserva> GetAllReservas()
+    public List<ReservaGetDTO> GetAllReservas()
     {
         return _reservaRepository.GetAllReservas();
     }
@@ -28,7 +28,7 @@ public class ReservaServices : IReservaServices
         return _reservaRepository.GetIdReserva(idReserva);
     }
 
-    public void CreateReserva(int usuarioId, Reserva reserva)
+    public void CreateReserva(int usuarioId, ReservaAddDTO reserva)
     {
         _reservaRepository.CreateReserva(usuarioId, reserva);
     }

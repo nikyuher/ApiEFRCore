@@ -19,7 +19,7 @@ public class ReservaController : ControllerBase
     }
 
     [HttpGet()]
-    public ActionResult<List<Reserva>> GetAllReserva() => _reservaService.GetAllReservas();
+    public ActionResult<List<ReservaGetDTO>> GetAllReserva() => _reservaService.GetAllReservas();
 
     [HttpGet("usuario/{id}")]
 
@@ -34,7 +34,7 @@ public class ReservaController : ControllerBase
     }
 
     [HttpPost("{IdUser}")]
-    public IActionResult CreateReserva(int IdUser, Reserva reserva)
+    public IActionResult CreateReserva(int IdUser, ReservaAddDTO reserva)
     {
 
 

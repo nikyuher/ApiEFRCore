@@ -32,3 +32,5 @@ services:
             dockerfile: API/Dockerfile
         depends_on:
             - db
+        environment:
+            - Environment=Docker    

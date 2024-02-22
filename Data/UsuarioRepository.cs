@@ -3,11 +3,11 @@ namespace Teatro.Data;
 using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
-public class UsuarioEFRepository : IUsuarioRepository
+public class UsuarioRepository : IUsuarioRepository
 {
     private readonly TeatroContext _context;
 
-    public UsuarioEFRepository(TeatroContext context)
+    public UsuarioRepository(TeatroContext context)
     {
         _context = context;
     }

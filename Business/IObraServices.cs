@@ -10,6 +10,5 @@ public interface IObraServices
     void UpdateObra(Obra obra);
     void DeleteObra(int idObra);
 
-    void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos);
 
 }

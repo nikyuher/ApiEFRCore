@@ -37,9 +37,4 @@ public class ObraServices : IObraServices
         _obraRepository.DeleteObra(obra);
     }
 
-    public void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos)
-    {
-        _obraRepository.AgregarDetalleReserva(idReserva, idObra, asientos);
-    }
-
 }

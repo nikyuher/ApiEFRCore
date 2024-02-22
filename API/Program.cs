@@ -16,22 +16,13 @@ var connectionString = environment == "Docker" ?
     configuration.GetConnectionString("TeatroDBDocker") :
     configuration.GetConnectionString("TeatroDBLocal");
 
-
-//EFCore Usuario
-
-//Obras
+// Configuración de la base de datos
 builder.Services.AddDbContext<TeatroContext>(options =>
-  options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
+    options.UseSqlServer(connectionString));
 
-//Usuarios
-builder.Services.AddDbContext<TeatroContext>(options =>
-  options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IUsuarioRepository, UsuarioEFRepository>();
-
-//Reserva
-builder.Services.AddDbContext<TeatroContext>(options =>
-  options.UseSqlServer(connectionString));
+// Repositorios
+builder.Services.AddScoped<IObraRepository, ObraRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
 // Add services to the container.

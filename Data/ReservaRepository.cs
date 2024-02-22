@@ -12,21 +12,19 @@ public class ReservaRepository : IReservaRepository
         _context = context;
     }
 
-    public List<Reserva> GetAllReservas()
+    public List<ReservaGetDTO> GetAllReservas()
     {
-        return _context.Reservas.Include(p => p.Detalles).ToList();
-    }
+        var reservas = _context.Reservas.Include(p => p.Detalles).ToList();
 
-    public Usuario GetIdUser(int idUser)
-    {
-        var user = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == idUser);
+        var reservasDTO = reservas.Select(reserva =>
+            new ReservaGetDTO
+            {
+                ReservaId = reserva.ReservaId,
+                UsuarioId = reserva.UsuarioId,
+                Detalles = reserva.Detalles
+            }).ToList();
 
-        if (user is null)
-        {
-            throw new InvalidOperationException($"No se encontro la Reserva con el ID {idUser}");
-        }
-
-        return user;
+        return reservasDTO;
     }
 
     public Reserva GetIdReserva(int idReserva)
@@ -47,16 +45,16 @@ public class ReservaRepository : IReservaRepository
                             .Include(r => r.Detalles)
                             .Where(r => r.UsuarioId == usuarioId)
                             .Select(r => new ReservaGetDTO
-                                {
-                                    ReservaId = r.ReservaId,
-                                    UsuarioId = r.UsuarioId,
-                                    Detalles = r.Detalles
-                                })
+                            {
+                                ReservaId = r.ReservaId,
+                                UsuarioId = r.UsuarioId,
+                                Detalles = r.Detalles
+                            })
                             .ToList();
         return reservasDTO;
     }
 
-    public void CreateReserva(int usuarioId, Reserva reserva)
+    public void CreateReserva(int usuarioId, ReservaAddDTO reservaDTO)
     {
         var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == usuarioId);
 
@@ -65,7 +63,33 @@ public class ReservaRepository : IReservaRepository
             throw new InvalidOperationException($"No se encontró ningún usuario con el Id {usuarioId}.");
         }
 
+        var reserva = new Reserva
+        {
+            UsuarioId = reservaDTO.UsuarioId,
+        };
+
         usuario.ListReservas.Add(reserva);
+        SaveChanges();
+    }
+
+    public void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos)
+    {
+        var reserva = _context.Reservas.FirstOrDefault(r => r.ReservaId == idReserva);
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == idObra);
+
+        if (reserva == null || obra == null)
+        {
+            throw new InvalidOperationException("No se encontró la reserva o la obra especificada.");
+        }
+
+        var detalleReserva = new DetalleReserva
+        {
+            Reserva = reserva,
+            Obra = obra,
+            Asientos = asientos
+        };
+
+        _context.DetalleReservas.Add(detalleReserva);
         SaveChanges();
     }
 
