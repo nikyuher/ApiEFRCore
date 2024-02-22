@@ -14,14 +14,17 @@ public class ReservaRepository : IReservaRepository
 
     public List<ReservaGetDTO> GetAllReservas()
     {
-        var reservas = _context.Reservas.Include(p => p.Detalles).ToList();
+        var reservas = _context.Reservas.Include(r => r.Obra).Include(r => r.Asiento).ToList();
 
         var reservasDTO = reservas.Select(reserva =>
             new ReservaGetDTO
             {
                 ReservaId = reserva.ReservaId,
                 UsuarioId = reserva.UsuarioId,
-                Detalles = reserva.Detalles
+                ObraId = reserva.ObraId,
+                Obra = reserva.Obra,
+                AsientoId = reserva.AsientoId,
+                Asiento = reserva.Asiento
             }).ToList();
 
         return reservasDTO;
@@ -42,69 +45,66 @@ public class ReservaRepository : IReservaRepository
     public List<ReservaGetDTO> GetReservasUsuario(int usuarioId)
     {
         var reservasDTO = _context.Reservas
-                            .Include(r => r.Detalles)
                             .Where(r => r.UsuarioId == usuarioId)
                             .Select(r => new ReservaGetDTO
                             {
                                 ReservaId = r.ReservaId,
                                 UsuarioId = r.UsuarioId,
-                                Detalles = r.Detalles
+                                ObraId = r.ObraId,
+                                Obra = r.Obra,
+                                AsientoId = r.AsientoId,
+                                Asiento = r.Asiento
                             })
                             .ToList();
         return reservasDTO;
     }
 
-    public void CreateReserva(int usuarioId, ReservaAddDTO reservaDTO)
+    public void CreateReserva(ReservaAddDTO reservaDTO)
     {
-        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == usuarioId);
+        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reservaDTO.UsuarioId);
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
+        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
 
-        if (usuario == null)
+        if (usuario == null || obra == null || asiento == null)
         {
-            throw new InvalidOperationException($"No se encontró ningún usuario con el Id {usuarioId}.");
+            throw new InvalidOperationException($"No se encontró el usuario, la obra o el asiento especificado.");
         }
 
         var reserva = new Reserva
         {
             UsuarioId = reservaDTO.UsuarioId,
+            Obra = obra,
+            Asiento = asiento
         };
 
         usuario.ListReservas.Add(reserva);
-        SaveChanges();
+        _context.SaveChanges();
     }
 
-    public void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos)
-    {
-        var reserva = _context.Reservas.FirstOrDefault(r => r.ReservaId == idReserva);
-        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == idObra);
 
-        if (reserva == null || obra == null)
+    public void UpdateReserva(ReservaPutDTO reservaDTO)
+    {
+        var reserva = GetIdReserva(reservaDTO.ReservaId);
+
+        if (reserva == null)
         {
-            throw new InvalidOperationException("No se encontró la reserva o la obra especificada.");
+            throw new KeyNotFoundException($"No se encontró la reserva con el ID {reservaDTO.ReservaId}.");
         }
 
-        var detalleReserva = new DetalleReserva
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
+        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
+
+        if (obra == null || asiento == null)
         {
-            Reserva = reserva,
-            Obra = obra,
-            Asientos = asientos
-        };
-
-        _context.DetalleReservas.Add(detalleReserva);
-        SaveChanges();
-    }
-
-    public void UpdateReserva(Reserva reserva)
-    {
-        var update = GetIdReserva(reserva.ReservaId);
-
-        if (update is null)
-        {
-            throw new KeyNotFoundException($"No se encontró la reserva con el ID {reserva.ReservaId}.");
+            throw new InvalidOperationException("No se encontró la obra o el asiento especificado.");
         }
 
-        _context.Entry(update).CurrentValues.SetValues(reserva);
-        SaveChanges();
+        reserva.Obra = obra;
+        reserva.Asiento = asiento;
+
+        _context.SaveChanges();
     }
+
 
     public void DeleteReserva(int idReserva)
     {

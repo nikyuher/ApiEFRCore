@@ -9,9 +9,9 @@ public interface IReservaServices
 
     public Reserva GetIdReserva(int idReserva);
 
-    void CreateReserva(int usuarioId, ReservaAddDTO reserva);
+    void CreateReserva(ReservaAddDTO reserva);
 
-    void UpdateReserva(Reserva reserva);
+    void UpdateReserva(ReservaPutDTO reserva);
 
     void DeleteReserva(int idReserva);
 }

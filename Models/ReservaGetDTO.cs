@@ -6,5 +6,9 @@ public class ReservaGetDTO
 
     public int UsuarioId { get; set; }
 
-    public List<DetalleReserva> Detalles { get; set; } = new List<DetalleReserva>();
+    public int ObraId { get; set; }
+    public Obra? Obra { get; set; }
+
+    public int AsientoId { get; set; }
+    public Asiento? Asiento { get; set; }
 }

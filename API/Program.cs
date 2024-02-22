@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUsuarioServices, UsuarioServices>();
 builder.Services.AddScoped<IReservaServices, ReservaServices>();
 builder.Services.AddScoped<IObraServices, ObraServices>();
+builder.Services.AddScoped<IAsientoServices, AsientoServices>();
 
 // Add services to the container.
 var configuration = builder.Configuration;
@@ -21,9 +22,10 @@ builder.Services.AddDbContext<TeatroContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Repositorios
-builder.Services.AddScoped<IObraRepository, ObraRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+builder.Services.AddScoped<IObraRepository, ObraRepository>();
+builder.Services.AddScoped<IAsientoRepository, AsientoRepository>();
 
 // Add services to the container.
 

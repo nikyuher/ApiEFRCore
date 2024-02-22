@@ -15,9 +15,11 @@ public class UsuarioRepository : IUsuarioRepository
     public List<UsuarioGetDTO> GetAllUsuarios()
     {
         var usuarios = _context.Usuarios
-                        .Include(p => p.ListReservas)
-                            .ThenInclude(pi => pi.Detalles)
-                        .ToList();
+                            .Include(u => u.ListReservas)
+                                .ThenInclude(r => r.Obra)
+                            .Include(u => u.ListReservas)
+                                .ThenInclude(r => r.Asiento)
+                            .ToList();
 
         var usuariosDTO = usuarios.Select(usuario => new UsuarioGetDTO
         {
@@ -25,22 +27,25 @@ public class UsuarioRepository : IUsuarioRepository
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
             Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas
+            ListReservas = usuario.ListReservas 
         }).ToList();
 
         return usuariosDTO;
     }
 
+
     public UsuarioGetDTO GetIdUsuarioDTO(int idUsuario)
     {
         var usuario = _context.Usuarios
-                                .Include(p => p.ListReservas)
-                                    .ThenInclude(pi => pi.Detalles)
+                                .Include(u => u.ListReservas)
+                                    .ThenInclude(r => r.Obra)
+                                .Include(u => u.ListReservas)
+                                    .ThenInclude(r => r.Asiento)
                                 .FirstOrDefault(u => u.UsuarioId == idUsuario);
 
         if (usuario is null)
         {
-            throw new InvalidOperationException($"No se encontro al usuario con el ID {idUsuario}");
+            throw new InvalidOperationException($"No se encontró al usuario con el ID {idUsuario}");
         }
 
         var usuarioDTO = new UsuarioGetDTO

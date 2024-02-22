@@ -34,16 +34,16 @@ public class ReservaController : ControllerBase
     }
 
     [HttpPost("{IdUser}")]
-    public IActionResult CreateReserva(int IdUser, ReservaAddDTO reserva)
+    public IActionResult CreateReserva(ReservaAddDTO reserva)
     {
 
 
-        _reservaService.CreateReserva(IdUser, reserva);
+        _reservaService.CreateReserva(reserva);
         return Ok(reserva);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateReserva(int id, Reserva reserva)
+    public IActionResult UpdateReserva(int id, ReservaPutDTO reserva)
     {
 
         var existingUser = _reservaService.GetIdReserva(id);

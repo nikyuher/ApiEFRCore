@@ -9,12 +9,11 @@ public interface IReservaRepository
 
     public Reserva GetIdReserva(int idReserva);
 
-    void CreateReserva(int usuarioId, ReservaAddDTO reserva);
+    void CreateReserva(ReservaAddDTO reserva);
 
-    void UpdateReserva(Reserva reserva);
+    void UpdateReserva(ReservaPutDTO reserva);
 
     void DeleteReserva(int idReserva);
-    void AgregarDetalleReserva(int idReserva, int idObra, List<Asiento> asientos);
 
     void SaveChanges();
 }

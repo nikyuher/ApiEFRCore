@@ -60,9 +60,9 @@ public class ObraRepository : IObraRepository
             throw new InvalidOperationException($"No se encontro la Obra con el id {idObra}");
         }
 
-        var DetalleSala = _context.DetalleReservas.Where(ob => ob.ObraId == idObra);
+        var DetalleSala = _context.Reservas.Where(ob => ob.ObraId == idObra);
 
-        _context.DetalleReservas.RemoveRange(DetalleSala);
+        _context.Reservas.RemoveRange(DetalleSala);
         _context.Obras.Remove(obra);
         SaveChanges();
     }
