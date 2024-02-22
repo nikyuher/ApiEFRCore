@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teatro.Data;
 
@@ -11,9 +12,10 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    partial class TeatroContextModelSnapshot : ModelSnapshot
+    [Migration("20240221203829_solucionReferenciaCircular")]
+    partial class solucionReferenciaCircular
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +32,12 @@ namespace Teatro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AsientoId"), 1L, 1);
 
+                    b.Property<int?>("DetalleReservaObraId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DetalleReservaReservaId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("Estado")
                         .HasColumnType("bit");
 
@@ -41,7 +49,24 @@ namespace Teatro.Data.Migrations
 
                     b.HasKey("AsientoId");
 
+                    b.HasIndex("DetalleReservaReservaId", "DetalleReservaObraId");
+
                     b.ToTable("Asientos");
+                });
+
+            modelBuilder.Entity("Teatro.Models.DetalleReserva", b =>
+                {
+                    b.Property<int>("ReservaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ObraId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReservaId", "ObraId");
+
+                    b.HasIndex("ObraId");
+
+                    b.ToTable("DetalleReservas");
                 });
 
             modelBuilder.Entity("Teatro.Models.Obra", b =>
@@ -77,20 +102,10 @@ namespace Teatro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservaId"), 1L, 1);
 
-                    b.Property<int>("AsientoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ObraId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("ReservaId");
-
-                    b.HasIndex("AsientoId");
-
-                    b.HasIndex("ObraId");
 
                     b.HasIndex("UsuarioId");
 
@@ -119,29 +134,49 @@ namespace Teatro.Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Teatro.Models.Reserva", b =>
+            modelBuilder.Entity("Teatro.Models.Asiento", b =>
                 {
-                    b.HasOne("Teatro.Models.Asiento", "Asiento")
-                        .WithMany()
-                        .HasForeignKey("AsientoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Teatro.Models.DetalleReserva", null)
+                        .WithMany("Asientos")
+                        .HasForeignKey("DetalleReservaReservaId", "DetalleReservaObraId");
+                });
 
+            modelBuilder.Entity("Teatro.Models.DetalleReserva", b =>
+                {
                     b.HasOne("Teatro.Models.Obra", "Obra")
                         .WithMany()
                         .HasForeignKey("ObraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Teatro.Models.Reserva", "Reserva")
+                        .WithMany("Detalles")
+                        .HasForeignKey("ReservaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Obra");
+
+                    b.Navigation("Reserva");
+                });
+
+            modelBuilder.Entity("Teatro.Models.Reserva", b =>
+                {
                     b.HasOne("Teatro.Models.Usuario", null)
                         .WithMany("ListReservas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Asiento");
+            modelBuilder.Entity("Teatro.Models.DetalleReserva", b =>
+                {
+                    b.Navigation("Asientos");
+                });
 
-                    b.Navigation("Obra");
+            modelBuilder.Entity("Teatro.Models.Reserva", b =>
+                {
+                    b.Navigation("Detalles");
                 });
 
             modelBuilder.Entity("Teatro.Models.Usuario", b =>

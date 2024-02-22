@@ -1,8 +1,7 @@
-﻿namespace Teatro.Models;
-using System.ComponentModel.DataAnnotations;
-public class Usuario
+namespace Teatro.Models;
+
+public class UsuarioGetDTO
 {
-    [Key]
     public int UsuarioId { get; set; }
 
     public string? Nombre { get; set; }

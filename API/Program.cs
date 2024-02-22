@@ -5,20 +5,27 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUsuarioServices, UsuarioServices>();
+builder.Services.AddScoped<IReservaServices, ReservaServices>();
 builder.Services.AddScoped<IObraServices, ObraServices>();
+builder.Services.AddScoped<IAsientoServices, AsientoServices>();
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("TeatroDB");
+var configuration = builder.Configuration;
+var environment = configuration["Environment"];
 
+var connectionString = environment == "Docker" ?
+    configuration.GetConnectionString("TeatroDBDocker") :
+    configuration.GetConnectionString("TeatroDBLocal");
 
-//EFCore Usuario
+// Configuración de la base de datos
 builder.Services.AddDbContext<TeatroContext>(options =>
-  options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IObraRepository, ObraEFRepository>();
+    options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<TeatroContext>(options =>
-  options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IUsuarioRepository, UsuarioEFRepository>();
+// Repositorios
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+builder.Services.AddScoped<IObraRepository, ObraRepository>();
+builder.Services.AddScoped<IAsientoRepository, AsientoRepository>();
 
 // Add services to the container.
 
@@ -42,16 +49,16 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<TeatroContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        throw new Exception("Error durante la migración de la base de datos.", ex);
-    }
+  var services = scope.ServiceProvider;
+  try
+  {
+    var context = services.GetRequiredService<TeatroContext>();
+    context.Database.Migrate();
+  }
+  catch (Exception ex)
+  {
+    throw new Exception("Error durante la migración de la base de datos.", ex);
+  }
 }
 
 app.Run();

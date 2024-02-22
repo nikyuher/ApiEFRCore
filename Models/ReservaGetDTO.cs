@@ -1,9 +1,7 @@
 namespace Teatro.Models;
 
-using System.ComponentModel.DataAnnotations;
-public class Reserva
+public class ReservaGetDTO
 {
-    [Key]
     public int ReservaId { get; set; }
 
     public int UsuarioId { get; set; }
