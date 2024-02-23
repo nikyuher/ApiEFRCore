@@ -16,11 +16,17 @@ public class ObraServices : IObraServices
     {
         return _obraRepository.GetAllObras();
     }
+    
+    public List<Obra> GetAllGeneros(string generoObra)
+    {
+        return _obraRepository.GetAllGeneros(generoObra);
+    }
 
     public Obra GetIdObra(int idObra)
     {
         return _obraRepository.GetIdObra(idObra);
     }
+
 
     public void CreateObra(Obra obra)
     {

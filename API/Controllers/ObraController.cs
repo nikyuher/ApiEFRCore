@@ -21,8 +21,10 @@ public class ObraController : ControllerBase
     [HttpGet()]
     public ActionResult<List<Obra>> GetAllObra() => _obraService.GetAllObras();
 
-    [HttpGet("{id}")]
+    [HttpGet("generos/{genero}")]
+    public ActionResult<List<Obra>> GetAllGenero(string genero) => _obraService.GetAllGeneros(genero);
 
+    [HttpGet("{id}")]
     public ActionResult<Obra> GetObraId(int id)
     {
         var obra = _obraService.GetIdObra(id);

@@ -19,6 +19,18 @@ public class ObraRepository : IObraRepository
     {
         return _context.Obras.ToList();
     }
+    
+    public List<Obra> GetAllGeneros(string generoObra)
+    {
+        var obras = _context.Obras.Where(p => p.Genero == generoObra).ToList();
+
+        if (obras.Count == 0)
+        {
+            throw new InvalidOperationException($"No se encontró ninguna obra con el género {generoObra}");
+        }
+
+        return obras;
+    }
 
     public Obra GetIdObra(int IdObra)
     {
@@ -31,6 +43,8 @@ public class ObraRepository : IObraRepository
 
         return obra;
     }
+
+
 
     public void CreateObra(Obra obra)
     {
