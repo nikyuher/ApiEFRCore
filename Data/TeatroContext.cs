@@ -21,6 +21,15 @@ public class TeatroContext : DbContext
             .HasOne(r => r.Asiento)
             .WithMany()
             .HasForeignKey(r => r.AsientoId);
+
+        modelBuilder.Entity<Usuario>().HasData(new Usuario
+        {
+            UsuarioId = 1,
+            Nombre = "admin",
+            CorreoElectronico = "admin@admin.com",
+            Contraseña = "admin",
+            Rol = true
+        });
     }
 
     public DbSet<Usuario> Usuarios { get; set; }

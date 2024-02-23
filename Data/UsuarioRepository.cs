@@ -24,6 +24,7 @@ public class UsuarioRepository : IUsuarioRepository
         var usuariosDTO = usuarios.Select(usuario => new UsuarioGetDTO
         {
             UsuarioId = usuario.UsuarioId,
+            Rol = usuario.Rol,
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
             Contraseña = usuario.Contraseña,
