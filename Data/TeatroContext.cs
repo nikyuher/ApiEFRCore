@@ -30,6 +30,31 @@ public class TeatroContext : DbContext
             Contraseña = "admin",
             Rol = true
         });
+
+        // Lista de filas y cantidad de asientos 
+        var filasAsientos = new List<(string Fila, int CantidadAsientos)>
+    {
+        ("A", 6),
+        ("B", 12),
+        ("C", 6)
+    };
+
+        int asientoId = 1;
+
+        // Generar asientos para cada fila
+        foreach (var filaAsientos in filasAsientos)
+        {
+            for (int i = 1; i <= filaAsientos.CantidadAsientos; i++)
+            {
+                modelBuilder.Entity<Asiento>().HasData(new Asiento
+                {
+                    AsientoId = asientoId,
+                    NombreAsiento = $"{filaAsientos.Fila}{i}",
+                    Estado = false
+                });
+                asientoId++;
+            }
+        }
     }
 
     public DbSet<Usuario> Usuarios { get; set; }

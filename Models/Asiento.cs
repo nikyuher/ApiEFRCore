@@ -5,7 +5,7 @@ public class Asiento
     [Key]
     public int AsientoId { get; set; }
     
-    public string? NumeroAsiento { get; set; }
+    public string? NombreAsiento { get; set; }
     public bool? Estado { get; set; }
 
 }

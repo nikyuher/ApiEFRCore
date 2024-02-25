@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teatro.Data;
 
@@ -11,9 +12,10 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    partial class TeatroContextModelSnapshot : ModelSnapshot
+    [Migration("20240225160816_GeneracionDeAsientos")]
+    partial class GeneracionDeAsientos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace Teatro.Data.Migrations
                     b.Property<bool?>("Estado")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NombreAsiento")
+                    b.Property<string>("NumeroAsiento")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AsientoId");
@@ -44,146 +46,122 @@ namespace Teatro.Data.Migrations
                         new
                         {
                             AsientoId = 1,
-                            Estado = false,
-                            NombreAsiento = "A1"
+                            NumeroAsiento = "A1"
                         },
                         new
                         {
                             AsientoId = 2,
-                            Estado = false,
-                            NombreAsiento = "A2"
+                            NumeroAsiento = "A2"
                         },
                         new
                         {
                             AsientoId = 3,
-                            Estado = false,
-                            NombreAsiento = "A3"
+                            NumeroAsiento = "A3"
                         },
                         new
                         {
                             AsientoId = 4,
-                            Estado = false,
-                            NombreAsiento = "A4"
+                            NumeroAsiento = "A4"
                         },
                         new
                         {
                             AsientoId = 5,
-                            Estado = false,
-                            NombreAsiento = "A5"
+                            NumeroAsiento = "A5"
                         },
                         new
                         {
                             AsientoId = 6,
-                            Estado = false,
-                            NombreAsiento = "A6"
+                            NumeroAsiento = "A6"
                         },
                         new
                         {
                             AsientoId = 7,
-                            Estado = false,
-                            NombreAsiento = "B1"
+                            NumeroAsiento = "B1"
                         },
                         new
                         {
                             AsientoId = 8,
-                            Estado = false,
-                            NombreAsiento = "B2"
+                            NumeroAsiento = "B2"
                         },
                         new
                         {
                             AsientoId = 9,
-                            Estado = false,
-                            NombreAsiento = "B3"
+                            NumeroAsiento = "B3"
                         },
                         new
                         {
                             AsientoId = 10,
-                            Estado = false,
-                            NombreAsiento = "B4"
+                            NumeroAsiento = "B4"
                         },
                         new
                         {
                             AsientoId = 11,
-                            Estado = false,
-                            NombreAsiento = "B5"
+                            NumeroAsiento = "B5"
                         },
                         new
                         {
                             AsientoId = 12,
-                            Estado = false,
-                            NombreAsiento = "B6"
+                            NumeroAsiento = "B6"
                         },
                         new
                         {
                             AsientoId = 13,
-                            Estado = false,
-                            NombreAsiento = "B7"
+                            NumeroAsiento = "B7"
                         },
                         new
                         {
                             AsientoId = 14,
-                            Estado = false,
-                            NombreAsiento = "B8"
+                            NumeroAsiento = "B8"
                         },
                         new
                         {
                             AsientoId = 15,
-                            Estado = false,
-                            NombreAsiento = "B9"
+                            NumeroAsiento = "B9"
                         },
                         new
                         {
                             AsientoId = 16,
-                            Estado = false,
-                            NombreAsiento = "B10"
+                            NumeroAsiento = "B10"
                         },
                         new
                         {
                             AsientoId = 17,
-                            Estado = false,
-                            NombreAsiento = "B11"
+                            NumeroAsiento = "B11"
                         },
                         new
                         {
                             AsientoId = 18,
-                            Estado = false,
-                            NombreAsiento = "B12"
+                            NumeroAsiento = "B12"
                         },
                         new
                         {
                             AsientoId = 19,
-                            Estado = false,
-                            NombreAsiento = "C1"
+                            NumeroAsiento = "C1"
                         },
                         new
                         {
                             AsientoId = 20,
-                            Estado = false,
-                            NombreAsiento = "C2"
+                            NumeroAsiento = "C2"
                         },
                         new
                         {
                             AsientoId = 21,
-                            Estado = false,
-                            NombreAsiento = "C3"
+                            NumeroAsiento = "C3"
                         },
                         new
                         {
                             AsientoId = 22,
-                            Estado = false,
-                            NombreAsiento = "C4"
+                            NumeroAsiento = "C4"
                         },
                         new
                         {
                             AsientoId = 23,
-                            Estado = false,
-                            NombreAsiento = "C5"
+                            NumeroAsiento = "C5"
                         },
                         new
                         {
                             AsientoId = 24,
-                            Estado = false,
-                            NombreAsiento = "C6"
+                            NumeroAsiento = "C6"
                         });
                 });
 
