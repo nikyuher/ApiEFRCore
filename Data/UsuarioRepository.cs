@@ -28,7 +28,7 @@ public class UsuarioRepository : IUsuarioRepository
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
             Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas 
+            ListReservas = usuario.ListReservas
         }).ToList();
 
         return usuariosDTO;
@@ -61,6 +61,49 @@ public class UsuarioRepository : IUsuarioRepository
         return usuarioDTO;
     }
 
+    public UsuarioGetRegisterDTO GetRegisterUsuario(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(email));
+        }
+
+        if (!ValidacionEmail(email))
+        {
+            throw new ArgumentException("El formato del correo electrónico no es válido", nameof(email));
+        }
+
+        var user = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email);
+
+        if (user is null)
+        {
+            throw new InvalidOperationException($"No se encontro usuario con el Email: {email}");
+        }
+
+        var usuarioDTO = new UsuarioGetRegisterDTO
+        {
+            UsuarioId = user.UsuarioId,
+            Nombre = user.Nombre,
+            CorreoElectronico = user.CorreoElectronico,
+            Contraseña = user.Contraseña
+        };
+
+        return usuarioDTO;
+    }
+
+    private bool ValidacionEmail(string email)
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public Usuario GetIdUser(int idUser)
     {
         var user = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == idUser);
@@ -72,6 +115,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         return user;
     }
+
 
     public void CreateUsuario(UsuarioAddDTO usuarioDto)
     {

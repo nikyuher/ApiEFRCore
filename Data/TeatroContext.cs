@@ -12,6 +12,20 @@ public class TeatroContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.CorreoElectronico)
+            .IsUnique();
+
+        modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.Nombre)
+            .IsUnique();
+
+        modelBuilder.Entity<Usuario>()
+            .HasIndex(u => u.Contraseña)
+            .IsUnique();
+
+        //Relacion Reservas a Usuario
         modelBuilder.Entity<Reserva>()
             .HasOne(r => r.Obra)
             .WithMany()
@@ -22,6 +36,7 @@ public class TeatroContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.AsientoId);
 
+        //Creacion Cuenta Administrador
         modelBuilder.Entity<Usuario>().HasData(new Usuario
         {
             UsuarioId = 1,

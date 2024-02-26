@@ -25,6 +25,10 @@ public class UsuarioServices : IUsuarioServices
         return _usuarioRepository.GetIdUsuarioDTO(idUsuario);
     }
 
+    public UsuarioGetRegisterDTO GetRegisterUsuario(string email){
+        return _usuarioRepository.GetRegisterUsuario(email);
+    }
+
     public void CreateUsuario(UsuarioAddDTO usuario)
     {
         _usuarioRepository.CreateUsuario(usuario);

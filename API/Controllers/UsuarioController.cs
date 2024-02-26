@@ -33,6 +33,18 @@ public class UsuarioController : ControllerBase
         return user;
     }
 
+    [HttpGet("email/{email}")]
+
+    public ActionResult<UsuarioGetRegisterDTO> GetUsuarioEmail(string email)
+    {
+        var user = _usuarioService.GetRegisterUsuario(email);
+
+        if (user == null)
+            return NotFound();
+
+        return user;
+    }
+
     [HttpPost()]
     public IActionResult CreateUsuario(UsuarioAddDTO user)
     {
