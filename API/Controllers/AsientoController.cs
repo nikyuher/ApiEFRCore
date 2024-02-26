@@ -36,8 +36,10 @@ public class AsientoController : ControllerBase
     [HttpPost()]
     public IActionResult CreateAsiento(Asiento asiento)
     {
+
         _asientoService.CreateAsiento(asiento);
         return Ok(asiento);
+
     }
 
     [HttpPut("{id}")]
@@ -61,6 +63,7 @@ public class AsientoController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteAsiento(int id)
     {
+
         var asiento = _asientoService.GetIdAsiento(id);
 
         if (asiento is null)
@@ -69,6 +72,7 @@ public class AsientoController : ControllerBase
         _asientoService.DeleteAsiento(id);
 
         return Ok();
+
     }
 
 }

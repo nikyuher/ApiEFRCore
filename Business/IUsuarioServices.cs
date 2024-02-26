@@ -7,7 +7,7 @@ public interface IUsuarioServices
 
     public UsuarioGetDTO GetIdUsuario(int idUsuario);
 
-    public UsuarioGetRegisterDTO GetRegisterUsuario(string email);
+    public UsuarioGetDTO Login(string email, string password);
     void CreateUsuario(UsuarioAddDTO usuario);
 
     void UpdateUsuario(UsuarioPutDTO usuario);

@@ -61,47 +61,35 @@ public class UsuarioRepository : IUsuarioRepository
         return usuarioDTO;
     }
 
-    public UsuarioGetRegisterDTO GetRegisterUsuario(string email)
+    public UsuarioGetDTO Login(string email, string password)
     {
         if (string.IsNullOrWhiteSpace(email))
         {
             throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(email));
         }
 
-        if (!ValidacionEmail(email))
+        if (string.IsNullOrWhiteSpace(password))
         {
-            throw new ArgumentException("El formato del correo electrónico no es válido", nameof(email));
+            throw new ArgumentException("La contraseña no puede estar vacía", nameof(password));
         }
 
-        var user = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email);
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email && u.Contraseña == password);
 
-        if (user is null)
+        if (usuario is null)
         {
-            throw new InvalidOperationException($"No se encontro usuario con el Email: {email}");
+            throw new InvalidOperationException("Credenciales incorrectas");
         }
 
-        var usuarioDTO = new UsuarioGetRegisterDTO
+        var usuarioDTO = new UsuarioGetDTO
         {
-            UsuarioId = user.UsuarioId,
-            Nombre = user.Nombre,
-            CorreoElectronico = user.CorreoElectronico,
-            Contraseña = user.Contraseña
+            UsuarioId = usuario.UsuarioId,
+            Nombre = usuario.Nombre,
+            CorreoElectronico = usuario.CorreoElectronico,
+            Contraseña = usuario.Contraseña,
+            ListReservas = usuario.ListReservas
         };
 
         return usuarioDTO;
-    }
-
-    private bool ValidacionEmail(string email)
-    {
-        try
-        {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch
-        {
-            return false;
-        }
     }
 
     public Usuario GetIdUser(int idUser)

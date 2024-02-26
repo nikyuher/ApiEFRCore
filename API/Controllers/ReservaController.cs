@@ -25,21 +25,23 @@ public class ReservaController : ControllerBase
 
     public ActionResult<List<ReservaGetDTO>> GetReservasUsuario(int id)
     {
+
         var reserva = _reservaService.GetReservasUsuario(id);
 
         if (reserva == null)
             return NotFound();
 
         return reserva;
+
     }
 
     [HttpPost("{IdUser}")]
     public IActionResult CreateReserva(ReservaAddDTO reserva)
     {
 
-
         _reservaService.CreateReserva(reserva);
         return Ok(reserva);
+
     }
 
     [HttpPut("{id}")]
@@ -60,6 +62,7 @@ public class ReservaController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteReserva(int id)
     {
+
         var user = _reservaService.GetIdReserva(id);
 
         if (user is null)

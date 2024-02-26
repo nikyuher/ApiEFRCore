@@ -27,24 +27,29 @@ public class ObraController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Obra> GetObraId(int id)
     {
+
         var obra = _obraService.GetIdObra(id);
         _logger.LogInformation("peticion obra: " + id.ToString());
         if (obra == null)
             return NotFound();
 
         return obra;
+
     }
 
     [HttpPost()]
     public IActionResult CreateObra(Obra obra)
     {
+
         _obraService.CreateObra(obra);
         return Ok(obra);
+
     }
 
     [HttpPut("{id}")]
     public IActionResult UpdateObra(int id, Obra obra)
     {
+
         if (id != obra.ObraId)
             return BadRequest();
 
@@ -56,11 +61,13 @@ public class ObraController : ControllerBase
         _obraService.UpdateObra(obra);
 
         return Ok(obra);
+
     }
 
     [HttpPut("img/{id}")]
     public IActionResult UpdateObraImg(int id, ObraPutImgDTO obra)
     {
+
         if (id != obra.ObraId)
             return BadRequest();
 
@@ -72,11 +79,13 @@ public class ObraController : ControllerBase
         _obraService.UpdateObraImg(obra);
 
         return Ok(obra);
+
     }
 
     [HttpPut("info/{id}")]
     public IActionResult UpdateObraInfo(int id, ObraPutInfoDTO obra)
     {
+
         if (id != obra.ObraId)
             return BadRequest();
 
@@ -88,11 +97,13 @@ public class ObraController : ControllerBase
         _obraService.UpdateObraInfo(obra);
 
         return Ok(obra);
+
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteObra(int id)
     {
+
         var obra = _obraService.GetIdObra(id);
 
         if (obra is null)
@@ -101,6 +112,7 @@ public class ObraController : ControllerBase
         _obraService.DeleteObra(id);
 
         return Ok();
+
     }
 
 }
