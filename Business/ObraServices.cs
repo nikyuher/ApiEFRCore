@@ -16,7 +16,7 @@ public class ObraServices : IObraServices
     {
         return _obraRepository.GetAllObras();
     }
-    
+
     public List<Obra> GetAllGeneros(string generoObra)
     {
         return _obraRepository.GetAllGeneros(generoObra);
@@ -36,6 +36,15 @@ public class ObraServices : IObraServices
     public void UpdateObra(Obra obra)
     {
         _obraRepository.UpdateObra(obra);
+    }
+
+    public void UpdateObraImg(ObraPutImgDTO imagen)
+    {
+        _obraRepository.UpdateObraImg(imagen);
+    }
+    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+    {
+        _obraRepository.UpdateObraInfo(obraInfo);
     }
 
     public void DeleteObra(int obra)

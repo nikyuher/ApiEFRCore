@@ -19,7 +19,7 @@ public class ObraRepository : IObraRepository
     {
         return _context.Obras.ToList();
     }
-    
+
     public List<Obra> GetAllGeneros(string generoObra)
     {
         var obras = _context.Obras.Where(p => p.Genero == generoObra).ToList();
@@ -45,7 +45,6 @@ public class ObraRepository : IObraRepository
     }
 
 
-
     public void CreateObra(Obra obra)
     {
         _context.Obras.Add(obra);
@@ -62,6 +61,36 @@ public class ObraRepository : IObraRepository
         }
 
         _context.Entry(update).CurrentValues.SetValues(obra);
+        SaveChanges();
+    }
+
+    public void UpdateObraImg(ObraPutImgDTO imagen)
+    {
+        var obra = GetIdObra(imagen.ObraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {imagen.ObraId}.");
+        }
+
+        obra.Imagen = imagen.Imagen;
+        SaveChanges();
+    }
+
+    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+    {
+        var obra = GetIdObra(obraInfo.ObraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
+        }
+
+        obra.Genero = obraInfo.Genero;
+        obra.Título = obraInfo.Título;
+        obra.Descripción = obraInfo.Descripción;
+        obra.PrecioEntrada = obraInfo.PrecioEntrada;
+
         SaveChanges();
     }
 

@@ -8,6 +8,8 @@ public interface IObraRepository
     public Obra GetIdObra(int IdObra);
     void CreateObra(Obra obra);
     void UpdateObra(Obra obra);
+    void UpdateObraImg(ObraPutImgDTO imagen);
+    void UpdateObraInfo(ObraPutInfoDTO obraInfo);
     void DeleteObra(int idObra);
     void SaveChanges();
 }
