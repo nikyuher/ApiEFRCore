@@ -150,7 +150,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         if (usuario is null)
         {
-            throw new KeyNotFoundException("No se encontró el usuario a actualizar.");
+            throw new KeyNotFoundException("No se encontró el Usuario a actualizar.");
         }
 
         usuario.Nombre = usuarioDto.Nombre;

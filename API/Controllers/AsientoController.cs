@@ -57,7 +57,23 @@ public class AsientoController : ControllerBase
         _asientoService.UpdateAsiento(asiento);
 
         return Ok(asiento);
+    }
 
+        [HttpPut("{id}/estado")]
+    public IActionResult UpdateEstado(int id, AsientoPutEstadoDTO asiento)
+    {
+
+        if (id != asiento.AsientoId)
+            return BadRequest();
+
+        var existingAsiento = _asientoService.GetIdAsiento(id);
+
+        if (existingAsiento is null)
+            return NotFound();
+
+        _asientoService.UpdateEstado(asiento);
+
+        return Ok(asiento);
     }
 
     [HttpDelete("{id}")]

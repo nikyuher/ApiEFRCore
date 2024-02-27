@@ -7,6 +7,7 @@ public interface IAsientoRepository
     public Asiento GetIdAsiento(int idAsiento);
     void CreateAsiento(Asiento asiento);
     void UpdateAsiento(Asiento asiento);
+    void UpdateEstado(AsientoPutEstadoDTO asiento);
     void DeleteAsiento(int idAsiento);
     void SaveChanges();
 }

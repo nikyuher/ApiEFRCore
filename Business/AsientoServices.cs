@@ -32,6 +32,10 @@ public class AsientoServices : IAsientoServices
         _asientoRepository.UpdateAsiento(asiento);
     }
 
+    public void UpdateEstado(AsientoPutEstadoDTO asiento){
+        _asientoRepository.UpdateEstado(asiento);
+    }
+
     public void DeleteAsiento(int asiento)
     {
         _asientoRepository.DeleteAsiento(asiento);

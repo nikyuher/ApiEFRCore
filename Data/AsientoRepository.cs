@@ -26,7 +26,7 @@ public class AsientoRepository : IAsientoRepository
 
         if (obra is null)
         {
-            throw new InvalidOperationException($"No se encontro la Obra con el id {IdObra}");
+            throw new InvalidOperationException($"No se encontro el Asiento con el id {IdObra}");
         }
 
         return obra;
@@ -44,10 +44,24 @@ public class AsientoRepository : IAsientoRepository
 
         if (update is null)
         {
-            throw new KeyNotFoundException("No se encontro la obra a actualizar.");
+            throw new KeyNotFoundException("No se encontro el Asiento a actualizar.");
         }
 
         _context.Entry(update).CurrentValues.SetValues(asiento);
+        SaveChanges();
+    }
+
+    public void UpdateEstado(AsientoPutEstadoDTO asiento)
+    {
+        var update = GetIdAsiento(asiento.AsientoId);
+
+        if (update is null)
+        {
+            throw new KeyNotFoundException("No se encontro el Asiento a actualizar.");
+        }
+
+        update.Estado = asiento.Estado;
+
         SaveChanges();
     }
 
@@ -57,7 +71,7 @@ public class AsientoRepository : IAsientoRepository
 
         if (asiento is null)
         {
-            throw new InvalidOperationException($"No se encontro la Obra con el id {idAsiento}");
+            throw new InvalidOperationException($"No se encontro el Asiento con el id {idAsiento}");
         }
 
         var DetalleSala = _context.Reservas.Where(ob => ob.AsientoId == idAsiento);

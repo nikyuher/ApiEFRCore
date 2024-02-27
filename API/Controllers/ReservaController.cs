@@ -38,10 +38,15 @@ public class ReservaController : ControllerBase
     [HttpPost("{IdUser}")]
     public IActionResult CreateReserva(ReservaAddDTO reserva)
     {
-
-        _reservaService.CreateReserva(reserva);
-        return Ok(reserva);
-
+        try
+        {
+            _reservaService.CreateReserva(reserva);
+            return Ok(reserva);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
 
     [HttpPut("{id}")]

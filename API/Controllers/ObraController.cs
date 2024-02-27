@@ -50,17 +50,24 @@ public class ObraController : ControllerBase
     public IActionResult UpdateObra(int id, Obra obra)
     {
 
-        if (id != obra.ObraId)
-            return BadRequest();
+        try
+        {
+            if (id != obra.ObraId)
+                return BadRequest();
 
-        var existingObra = _obraService.GetIdObra(id);
+            var existingObra = _obraService.GetIdObra(id);
 
-        if (existingObra is null)
-            return NotFound();
+            if (existingObra is null)
+                return NotFound();
 
-        _obraService.UpdateObra(obra);
+            _obraService.UpdateObra(obra);
 
-        return Ok(obra);
+            return Ok(obra);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
 
     }
 
