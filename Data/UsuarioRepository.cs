@@ -61,6 +61,35 @@ public class UsuarioRepository : IUsuarioRepository
         return usuarioDTO;
     }
 
+    public UsuarioGetLoginDTO GetLogin(string email, string password)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(email));
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            throw new ArgumentException("La contraseña no puede estar vacía", nameof(password));
+        }
+
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email && u.Contraseña == password);
+
+        if (usuario is null)
+        {
+            throw new InvalidOperationException("Credenciales incorrectas");
+        }
+
+        var usuarioLoginDTO = new UsuarioGetLoginDTO
+        {
+            UsuarioId = usuario.UsuarioId,
+            Rol = usuario.Rol,
+            Nombre = usuario.Nombre
+        };
+
+        return usuarioLoginDTO;
+    }
+
     public UsuarioGetDTO Login(string email, string password)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -82,11 +111,8 @@ public class UsuarioRepository : IUsuarioRepository
 
         var usuarioDTO = new UsuarioGetDTO
         {
-            UsuarioId = usuario.UsuarioId,
-            Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
             Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas
         };
 
         return usuarioDTO;

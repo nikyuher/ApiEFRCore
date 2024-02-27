@@ -35,6 +35,20 @@ public class UsuarioController : ControllerBase
 
     }
 
+    [HttpGet("login")]
+
+    public ActionResult<UsuarioGetLoginDTO> GetLogin(string email, string password)
+    {
+
+        var user = _usuarioService.GetLogin(email,password);
+
+        if (user == null)
+            return NotFound();
+
+        return user;
+
+    }
+
     [HttpPost("login")]
     public IActionResult Login(UsuarioGetDTO loginRequest)
     {
