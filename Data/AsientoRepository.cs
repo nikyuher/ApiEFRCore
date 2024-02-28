@@ -1,8 +1,6 @@
 namespace Teatro.Data;
 
-using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks.Dataflow;
+using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
 public class AsientoRepository : IAsientoRepository
@@ -14,27 +12,58 @@ public class AsientoRepository : IAsientoRepository
         _context = context;
     }
 
-
     public List<Asiento> GetAllAsiento()
     {
         return _context.Asientos.ToList();
     }
 
-    public Asiento GetIdAsiento(int IdObra)
+    public Asiento GetIdAsiento(int idAsiento)
     {
-        var obra = _context.Asientos.FirstOrDefault(p => p.AsientoId == IdObra);
+        var obra = _context.Asientos.FirstOrDefault(p => p.AsientoId == idAsiento);
 
         if (obra is null)
         {
-            throw new InvalidOperationException($"No se encontro el Asiento con el id {IdObra}");
+            throw new InvalidOperationException($"No se encontro el Asiento con el id {idAsiento}");
         }
 
         return obra;
     }
 
-    public void CreateAsiento(Asiento obra)
+    public void CreateAsiento(Asiento asiento)
     {
-        _context.Asientos.Add(obra);
+        _context.Asientos.Add(asiento);
+        SaveChanges();
+    }
+
+    public void AgregarAsientoAObra(int idAsiento, int idObra)
+    {
+        // Busca el asiento por su ID
+        var asiento = GetIdAsiento(idAsiento);
+
+        if (asiento is null)
+        {
+            throw new InvalidOperationException($"No se encontró el Asiento con el ID {idAsiento}");
+        }
+
+        // Busca la obra por su ID
+        var obra = _context.Obras.Include(o => o.ObrasAsientos).FirstOrDefault(o => o.ObraId == idObra);
+
+        if (obra is null)
+        {
+            throw new InvalidOperationException($"No se encontró la Obra con el ID {idObra}");
+        }
+
+        // Crea una nueva instancia de ObraAsiento con los datos del asiento modificado
+        var nuevaObraAsiento = new ObraAsiento
+        {
+            AsientoId = asiento.AsientoId,
+            Asiento = asiento,
+            ObraId = obra.ObraId
+        };
+
+        // Agrega la nueva instancia de ObraAsiento a la lista de ObrasAsientos de la Obra
+        obra.ObrasAsientos.Add(nuevaObraAsiento);
+
         SaveChanges();
     }
 
@@ -74,9 +103,6 @@ public class AsientoRepository : IAsientoRepository
             throw new InvalidOperationException($"No se encontro el Asiento con el id {idAsiento}");
         }
 
-        var DetalleSala = _context.Reservas.Where(ob => ob.AsientoId == idAsiento);
-
-        _context.Reservas.RemoveRange(DetalleSala);
         _context.Asientos.Remove(asiento);
         SaveChanges();
     }

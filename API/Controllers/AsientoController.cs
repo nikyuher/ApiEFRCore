@@ -42,6 +42,16 @@ public class AsientoController : ControllerBase
 
     }
 
+    [HttpPost("ocupados")]
+    public IActionResult AgregarAsientoAObra(int idAsiento, int idObra)
+    {
+
+        _asientoService.AgregarAsientoAObra(idAsiento, idObra);
+
+        return Ok("Asiento agregado exitosamente a la obra.");
+
+    }
+
     [HttpPut("{id}")]
     public IActionResult UpdateAsiento(int id, Asiento asiento)
     {
@@ -59,7 +69,7 @@ public class AsientoController : ControllerBase
         return Ok(asiento);
     }
 
-        [HttpPut("{id}/estado")]
+    [HttpPut("{id}/estado")]
     public IActionResult UpdateEstado(int id, AsientoPutEstadoDTO asiento)
     {
 

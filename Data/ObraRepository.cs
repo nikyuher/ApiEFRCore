@@ -1,8 +1,6 @@
 namespace Teatro.Data;
 
-using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks.Dataflow;
+using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
 public class ObraRepository : IObraRepository
@@ -17,7 +15,10 @@ public class ObraRepository : IObraRepository
 
     public List<Obra> GetAllObras()
     {
-        return _context.Obras.ToList();
+        return _context.Obras
+        .Include(p => p.ObrasAsientos)
+        .ThenInclude(r => r.Asiento)
+        .ToList();
     }
 
     public List<Obra> GetAllGeneros(string generoObra)

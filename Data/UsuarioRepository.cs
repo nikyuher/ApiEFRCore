@@ -17,8 +17,6 @@ public class UsuarioRepository : IUsuarioRepository
         var usuarios = _context.Usuarios
                             .Include(u => u.ListReservas)
                                 .ThenInclude(r => r.Obra)
-                            .Include(u => u.ListReservas)
-                                .ThenInclude(r => r.Asiento)
                             .ToList();
 
         var usuariosDTO = usuarios.Select(usuario => new UsuarioGetDTO
@@ -40,8 +38,6 @@ public class UsuarioRepository : IUsuarioRepository
         var usuario = _context.Usuarios
                                 .Include(u => u.ListReservas)
                                     .ThenInclude(r => r.Obra)
-                                .Include(u => u.ListReservas)
-                                    .ThenInclude(r => r.Asiento)
                                 .FirstOrDefault(u => u.UsuarioId == idUsuario);
 
         if (usuario is null)

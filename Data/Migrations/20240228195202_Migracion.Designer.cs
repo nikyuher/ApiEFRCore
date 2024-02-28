@@ -12,8 +12,8 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    [Migration("20240225161043_PequeñaCorrencionAsientos")]
-    partial class PequeñaCorrencionAsientos
+    [Migration("20240228195202_Migracion")]
+    partial class Migracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,7 @@ namespace Teatro.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("NombreAsiento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AsientoId");
@@ -198,20 +199,49 @@ namespace Teatro.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ObraId"), 1L, 1);
 
                     b.Property<string>("Descripción")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genero")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Imagen")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<decimal>("PrecioEntrada")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Título")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ObraId");
 
                     b.ToTable("Obras");
+                });
+
+            modelBuilder.Entity("Teatro.Models.ObraAsiento", b =>
+                {
+                    b.Property<int>("ObraAsientoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ObraAsientoId"), 1L, 1);
+
+                    b.Property<int>("AsientoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ObraId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ObraAsientoId");
+
+                    b.HasIndex("AsientoId");
+
+                    b.HasIndex("ObraId");
+
+                    b.ToTable("ObraAsientos");
                 });
 
             modelBuilder.Entity("Teatro.Models.Reserva", b =>
@@ -222,9 +252,6 @@ namespace Teatro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservaId"), 1L, 1);
 
-                    b.Property<int>("AsientoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ObraId")
                         .HasColumnType("int");
 
@@ -232,8 +259,6 @@ namespace Teatro.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ReservaId");
-
-                    b.HasIndex("AsientoId");
 
                     b.HasIndex("ObraId");
 
@@ -251,18 +276,30 @@ namespace Teatro.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"), 1L, 1);
 
                     b.Property<string>("Contraseña")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CorreoElectronico")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Rol")
                         .HasColumnType("bit");
 
                     b.HasKey("UsuarioId");
+
+                    b.HasIndex("Contraseña")
+                        .IsUnique();
+
+                    b.HasIndex("CorreoElectronico")
+                        .IsUnique();
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
 
@@ -277,7 +314,7 @@ namespace Teatro.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Teatro.Models.Reserva", b =>
+            modelBuilder.Entity("Teatro.Models.ObraAsiento", b =>
                 {
                     b.HasOne("Teatro.Models.Asiento", "Asiento")
                         .WithMany()
@@ -285,6 +322,17 @@ namespace Teatro.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Teatro.Models.Obra", null)
+                        .WithMany("ObrasAsientos")
+                        .HasForeignKey("ObraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asiento");
+                });
+
+            modelBuilder.Entity("Teatro.Models.Reserva", b =>
+                {
                     b.HasOne("Teatro.Models.Obra", "Obra")
                         .WithMany()
                         .HasForeignKey("ObraId")
@@ -297,9 +345,12 @@ namespace Teatro.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Asiento");
-
                     b.Navigation("Obra");
+                });
+
+            modelBuilder.Entity("Teatro.Models.Obra", b =>
+                {
+                    b.Navigation("ObrasAsientos");
                 });
 
             modelBuilder.Entity("Teatro.Models.Usuario", b =>

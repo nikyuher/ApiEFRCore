@@ -27,12 +27,18 @@ public class AsientoServices : IAsientoServices
         _asientoRepository.CreateAsiento(asiento);
     }
 
+    public void AgregarAsientoAObra(int idAsiento, int idObra)
+    {
+        _asientoRepository.AgregarAsientoAObra(idAsiento, idObra);
+    }
+
     public void UpdateAsiento(Asiento asiento)
     {
         _asientoRepository.UpdateAsiento(asiento);
     }
 
-    public void UpdateEstado(AsientoPutEstadoDTO asiento){
+    public void UpdateEstado(AsientoPutEstadoDTO asiento)
+    {
         _asientoRepository.UpdateEstado(asiento);
     }
 

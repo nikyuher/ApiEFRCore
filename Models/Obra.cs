@@ -19,4 +19,6 @@ public class Obra
     [Required]
     public decimal PrecioEntrada { get; set; }
 
+    public List<ObraAsiento> ObrasAsientos { get; set; } = new List<ObraAsiento>();
+
 }
