@@ -21,8 +21,13 @@ public class AsientoController : ControllerBase
     [HttpGet()]
     public ActionResult<List<Asiento>> GetAllObra() => _asientoService.GetAllAsiento();
 
-    [HttpGet("{id}")]
+    [HttpGet("estado/{estado}")]
+    public ActionResult<List<Asiento>> GetAllEstado(bool estado)
+    {
+       return  _asientoService.GetAsientoEstado(estado);
 
+    }
+    [HttpGet("{id}")]
     public ActionResult<Asiento> GetAsientoId(int id)
     {
         var obra = _asientoService.GetIdAsiento(id);
@@ -43,10 +48,10 @@ public class AsientoController : ControllerBase
     }
 
     [HttpPost("ocupados")]
-    public IActionResult AgregarAsientoAObra(int idAsiento, int idObra)
+    public IActionResult AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
     {
 
-        _asientoService.AgregarAsientoAObra(idAsiento, idObra);
+        _asientoService.AgregarAsientoAObra(ocupadoDTO);
 
         return Ok("Asiento agregado exitosamente a la obra.");
 

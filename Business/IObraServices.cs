@@ -6,8 +6,9 @@ public interface IObraServices
 {
     public List<Obra> GetAllObras();
     public List<Obra> GetAllGeneros(string generoObra);
+    public ObraGetAsientosDTO GetAsientosObra(int obraId);
     public Obra GetIdObra(int IdObra);
-    void CreateObra(Obra obra);
+    void CreateObra(ObraAddDTO obra);
     void UpdateObra(Obra obra);
     void UpdateObraImg(ObraPutImgDTO imagen);
     void UpdateObraInfo(ObraPutInfoDTO obraInfo);

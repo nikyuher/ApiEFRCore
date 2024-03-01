@@ -1,5 +1,6 @@
 namespace Teatro.Data;
 
+using System.Reflection.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
@@ -15,6 +16,11 @@ public class AsientoRepository : IAsientoRepository
     public List<Asiento> GetAllAsiento()
     {
         return _context.Asientos.ToList();
+    }
+
+    public List<Asiento> GetAsientoEstado(bool estado){
+
+        return _context.Asientos.Where(p => p.Estado == estado).ToList();
     }
 
     public Asiento GetIdAsiento(int idAsiento)
@@ -35,37 +41,34 @@ public class AsientoRepository : IAsientoRepository
         SaveChanges();
     }
 
-    public void AgregarAsientoAObra(int idAsiento, int idObra)
+    public void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
     {
-        // Busca el asiento por su ID
-        var asiento = GetIdAsiento(idAsiento);
+        var asientoOriginal = GetIdAsiento(ocupadoDTO.AsientoId);
 
-        if (asiento is null)
+        if (asientoOriginal is null)
         {
-            throw new InvalidOperationException($"No se encontró el Asiento con el ID {idAsiento}");
+            throw new InvalidOperationException($"No se encontró el Asiento con el ID {ocupadoDTO.AsientoId}");
         }
 
-        // Busca la obra por su ID
-        var obra = _context.Obras.Include(o => o.ObrasAsientos).FirstOrDefault(o => o.ObraId == idObra);
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == ocupadoDTO.ObraId);
 
         if (obra is null)
         {
-            throw new InvalidOperationException($"No se encontró la Obra con el ID {idObra}");
+            throw new InvalidOperationException($"No se encontró la Obra con el ID {ocupadoDTO.ObraId}");
         }
 
-        // Crea una nueva instancia de ObraAsiento con los datos del asiento modificado
-        var nuevaObraAsiento = new ObraAsiento
+        var asientoNuevo = new Asiento
         {
-            AsientoId = asiento.AsientoId,
-            Asiento = asiento,
-            ObraId = obra.ObraId
+            NombreAsiento = asientoOriginal.NombreAsiento,
+            Estado = true 
         };
 
-        // Agrega la nueva instancia de ObraAsiento a la lista de ObrasAsientos de la Obra
-        obra.ObrasAsientos.Add(nuevaObraAsiento);
+        obra.AsientosOcupados.Add(asientoNuevo);
 
         SaveChanges();
     }
+
+
 
     public void UpdateAsiento(Asiento asiento)
     {

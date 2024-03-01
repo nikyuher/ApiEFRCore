@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teatro.Data;
 
@@ -11,9 +12,10 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    partial class TeatroContextModelSnapshot : ModelSnapshot
+    [Migration("20240301015258_probando4")]
+    partial class probando4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,12 +39,7 @@ namespace Teatro.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ObraId")
-                        .HasColumnType("int");
-
                     b.HasKey("AsientoId");
-
-                    b.HasIndex("ObraId");
 
                     b.ToTable("Asientos");
 
@@ -294,13 +291,6 @@ namespace Teatro.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Teatro.Models.Asiento", b =>
-                {
-                    b.HasOne("Teatro.Models.Obra", null)
-                        .WithMany("AsientosOcupados")
-                        .HasForeignKey("ObraId");
-                });
-
             modelBuilder.Entity("Teatro.Models.Reserva", b =>
                 {
                     b.HasOne("Teatro.Models.Obra", "Obra")
@@ -316,11 +306,6 @@ namespace Teatro.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Obra");
-                });
-
-            modelBuilder.Entity("Teatro.Models.Obra", b =>
-                {
-                    b.Navigation("AsientosOcupados");
                 });
 
             modelBuilder.Entity("Teatro.Models.Usuario", b =>

@@ -22,13 +22,18 @@ public class ObraServices : IObraServices
         return _obraRepository.GetAllGeneros(generoObra);
     }
 
+    public ObraGetAsientosDTO GetAsientosObra(int obraId)
+    {
+       return _obraRepository.GetAsientosObra(obraId);
+    }
+
     public Obra GetIdObra(int idObra)
     {
         return _obraRepository.GetIdObra(idObra);
     }
 
 
-    public void CreateObra(Obra obra)
+    public void CreateObra(ObraAddDTO obra)
     {
         _obraRepository.CreateObra(obra);
     }

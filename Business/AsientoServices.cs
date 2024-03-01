@@ -17,6 +17,10 @@ public class AsientoServices : IAsientoServices
         return _asientoRepository.GetAllAsiento();
     }
 
+    public List<Asiento> GetAsientoEstado(bool estado){
+        return _asientoRepository.GetAsientoEstado(estado);
+    }
+
     public Asiento GetIdAsiento(int idAsiento)
     {
         return _asientoRepository.GetIdAsiento(idAsiento);
@@ -27,9 +31,9 @@ public class AsientoServices : IAsientoServices
         _asientoRepository.CreateAsiento(asiento);
     }
 
-    public void AgregarAsientoAObra(int idAsiento, int idObra)
+    public void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
     {
-        _asientoRepository.AgregarAsientoAObra(idAsiento, idObra);
+        _asientoRepository.AgregarAsientoAObra(ocupadoDTO);
     }
 
     public void UpdateAsiento(Asiento asiento)

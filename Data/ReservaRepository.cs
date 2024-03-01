@@ -59,9 +59,8 @@ public class ReservaRepository : IReservaRepository
     {
         var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reservaDTO.UsuarioId);
         var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
-        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
 
-        if (usuario == null || obra == null || asiento == null)
+        if (usuario == null || obra == null)
         {
             throw new InvalidOperationException($"No se encontró el usuario, la obra o el asiento especificado.");
         }
