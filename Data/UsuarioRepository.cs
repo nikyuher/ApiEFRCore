@@ -14,10 +14,7 @@ public class UsuarioRepository : IUsuarioRepository
 
     public List<UsuarioGetDTO> GetAllUsuarios()
     {
-        var usuarios = _context.Usuarios
-                            .Include(u => u.ListReservas)
-                                .ThenInclude(r => r.Obra)
-                            .ToList();
+        var usuarios = _context.Usuarios.ToList();
 
         var usuariosDTO = usuarios.Select(usuario => new UsuarioGetDTO
         {
@@ -25,8 +22,7 @@ public class UsuarioRepository : IUsuarioRepository
             Rol = usuario.Rol,
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
-            Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas
+            Contraseña = usuario.Contraseña
         }).ToList();
 
         return usuariosDTO;
@@ -50,8 +46,7 @@ public class UsuarioRepository : IUsuarioRepository
             UsuarioId = usuario.UsuarioId,
             Nombre = usuario.Nombre,
             CorreoElectronico = usuario.CorreoElectronico,
-            Contraseña = usuario.Contraseña,
-            ListReservas = usuario.ListReservas
+            Contraseña = usuario.Contraseña
         };
 
         return usuarioDTO;
