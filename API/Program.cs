@@ -41,7 +41,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseCors(builder => builder
-    .WithOrigins("http://localhost:5173")
+    .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
 
