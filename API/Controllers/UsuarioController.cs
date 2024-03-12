@@ -25,19 +25,57 @@ public class UsuarioController : ControllerBase
 
     public ActionResult<UsuarioGetDTO> GetUsuarioId(int id)
     {
+
         var user = _usuarioService.GetIdUsuario(id);
 
         if (user == null)
             return NotFound();
 
         return user;
+
     }
+
+    [HttpGet("login")]
+
+    public ActionResult<UsuarioGetLoginDTO> GetLogin(string email, string password)
+    {
+
+        var user = _usuarioService.GetLogin(email,password);
+
+        if (user == null)
+            return NotFound();
+
+        return user;
+
+    }
+
+    [HttpPost("login")]
+    public IActionResult Login(UsuarioGetDTO loginRequest)
+    {
+        try
+        {
+            var usuario = _usuarioService.Login(loginRequest.CorreoElectronico, loginRequest.Contraseña);
+            return Ok(usuario);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+    
 
     [HttpPost()]
     public IActionResult CreateUsuario(UsuarioAddDTO user)
     {
-        _usuarioService.CreateUsuario(user);
-        return Ok(user);
+        try
+        {
+            _usuarioService.CreateUsuario(user);
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
 
     [HttpPut("{id}")]
@@ -56,11 +94,13 @@ public class UsuarioController : ControllerBase
 
         return Ok(user);
 
+
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteUsuario(int id)
     {
+
         var user = _usuarioService.GetIdUsuario(id);
 
         if (user is null)
@@ -69,6 +109,7 @@ public class UsuarioController : ControllerBase
         _usuarioService.DeleteUsuario(id);
 
         return Ok();
+
     }
 
 }

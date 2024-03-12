@@ -1,8 +1,6 @@
 namespace Teatro.Data;
 
-using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks.Dataflow;
+using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
 public class ObraRepository : IObraRepository
@@ -17,12 +15,45 @@ public class ObraRepository : IObraRepository
 
     public List<Obra> GetAllObras()
     {
-        return _context.Obras.ToList();
+        return _context.Obras
+        .Include(p => p.AsientosOcupados)
+        .ToList();
     }
+
+    public List<Obra> GetAllGeneros(string generoObra)
+    {
+        var obras = _context.Obras.Where(p => p.Genero == generoObra).Include(p => p.AsientosOcupados).ToList();
+
+        if (obras.Count == 0)
+        {
+            throw new InvalidOperationException($"No se encontró ninguna obra con el género {generoObra}");
+        }
+
+        return obras;
+    }
+
+    public ObraGetAsientosDTO GetAsientosObra(int obraId)
+    {
+        var obra = GetIdObra(obraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {obraId}.");
+        }
+
+        var nuevaObra = new ObraGetAsientosDTO
+        {
+            ObraId = obra.ObraId,
+            AsientosOcupados = obra.AsientosOcupados
+        };
+
+        return nuevaObra;
+    }
+
 
     public Obra GetIdObra(int IdObra)
     {
-        var obra = _context.Obras.FirstOrDefault(p => p.ObraId == IdObra);
+        var obra = _context.Obras.Include(p => p.AsientosOcupados).FirstOrDefault(p => p.ObraId == IdObra);
 
         if (obra is null)
         {
@@ -32,9 +63,20 @@ public class ObraRepository : IObraRepository
         return obra;
     }
 
-    public void CreateObra(Obra obra)
+
+    public void CreateObra(ObraAddDTO obra)
     {
-        _context.Obras.Add(obra);
+
+        var obraNueba = new Obra
+        {
+            Imagen = obra.Imagen,
+            Genero = obra.Genero,
+            Título = obra.Título,
+            Descripción = obra.Descripción,
+            PrecioEntrada = obra.PrecioEntrada
+        };
+
+        _context.Obras.Add(obraNueba);
         SaveChanges();
     }
 
@@ -48,6 +90,36 @@ public class ObraRepository : IObraRepository
         }
 
         _context.Entry(update).CurrentValues.SetValues(obra);
+        SaveChanges();
+    }
+
+    public void UpdateObraImg(ObraPutImgDTO imagen)
+    {
+        var obra = GetIdObra(imagen.ObraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {imagen.ObraId}.");
+        }
+
+        obra.Imagen = imagen.Imagen;
+        SaveChanges();
+    }
+
+    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+    {
+        var obra = GetIdObra(obraInfo.ObraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
+        }
+
+        obra.Genero = obraInfo.Genero;
+        obra.Título = obraInfo.Título;
+        obra.Descripción = obraInfo.Descripción;
+        obra.PrecioEntrada = obraInfo.PrecioEntrada;
+
         SaveChanges();
     }
 

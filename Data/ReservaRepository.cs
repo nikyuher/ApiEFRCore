@@ -14,7 +14,7 @@ public class ReservaRepository : IReservaRepository
 
     public List<ReservaGetDTO> GetAllReservas()
     {
-        var reservas = _context.Reservas.Include(r => r.Obra).Include(r => r.Asiento).ToList();
+        var reservas = _context.Reservas.Include(r => r.Obra).ToList();
 
         var reservasDTO = reservas.Select(reserva =>
             new ReservaGetDTO
@@ -22,9 +22,7 @@ public class ReservaRepository : IReservaRepository
                 ReservaId = reserva.ReservaId,
                 UsuarioId = reserva.UsuarioId,
                 ObraId = reserva.ObraId,
-                Obra = reserva.Obra,
-                AsientoId = reserva.AsientoId,
-                Asiento = reserva.Asiento
+                Obra = reserva.Obra
             }).ToList();
 
         return reservasDTO;
@@ -51,9 +49,7 @@ public class ReservaRepository : IReservaRepository
                                 ReservaId = r.ReservaId,
                                 UsuarioId = r.UsuarioId,
                                 ObraId = r.ObraId,
-                                Obra = r.Obra,
-                                AsientoId = r.AsientoId,
-                                Asiento = r.Asiento
+                                Obra = r.Obra
                             })
                             .ToList();
         return reservasDTO;
@@ -63,9 +59,8 @@ public class ReservaRepository : IReservaRepository
     {
         var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reservaDTO.UsuarioId);
         var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
-        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
 
-        if (usuario == null || obra == null || asiento == null)
+        if (usuario == null || obra == null)
         {
             throw new InvalidOperationException($"No se encontró el usuario, la obra o el asiento especificado.");
         }
@@ -74,7 +69,6 @@ public class ReservaRepository : IReservaRepository
         {
             UsuarioId = reservaDTO.UsuarioId,
             Obra = obra,
-            Asiento = asiento
         };
 
         usuario.ListReservas.Add(reserva);
@@ -100,7 +94,6 @@ public class ReservaRepository : IReservaRepository
         }
 
         reserva.Obra = obra;
-        reserva.Asiento = asiento;
 
         _context.SaveChanges();
     }

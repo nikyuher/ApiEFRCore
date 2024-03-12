@@ -4,7 +4,7 @@
 
 namespace Teatro.Data.Migrations
 {
-    public partial class eliminandoCosasObsoletas : Migration
+    public partial class probando6 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

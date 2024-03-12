@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teatro.Data;
 
@@ -11,9 +12,10 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    partial class TeatroContextModelSnapshot : ModelSnapshot
+    [Migration("20240228195202_Migracion")]
+    partial class Migracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,12 +39,7 @@ namespace Teatro.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ObraId")
-                        .HasColumnType("int");
-
                     b.HasKey("AsientoId");
-
-                    b.HasIndex("ObraId");
 
                     b.ToTable("Asientos");
 
@@ -224,6 +221,29 @@ namespace Teatro.Data.Migrations
                     b.ToTable("Obras");
                 });
 
+            modelBuilder.Entity("Teatro.Models.ObraAsiento", b =>
+                {
+                    b.Property<int>("ObraAsientoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ObraAsientoId"), 1L, 1);
+
+                    b.Property<int>("AsientoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ObraId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ObraAsientoId");
+
+                    b.HasIndex("AsientoId");
+
+                    b.HasIndex("ObraId");
+
+                    b.ToTable("ObraAsientos");
+                });
+
             modelBuilder.Entity("Teatro.Models.Reserva", b =>
                 {
                     b.Property<int>("ReservaId")
@@ -294,11 +314,21 @@ namespace Teatro.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Teatro.Models.Asiento", b =>
+            modelBuilder.Entity("Teatro.Models.ObraAsiento", b =>
                 {
+                    b.HasOne("Teatro.Models.Asiento", "Asiento")
+                        .WithMany()
+                        .HasForeignKey("AsientoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Teatro.Models.Obra", null)
-                        .WithMany("AsientosOcupados")
-                        .HasForeignKey("ObraId");
+                        .WithMany("ObrasAsientos")
+                        .HasForeignKey("ObraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asiento");
                 });
 
             modelBuilder.Entity("Teatro.Models.Reserva", b =>
@@ -320,7 +350,7 @@ namespace Teatro.Data.Migrations
 
             modelBuilder.Entity("Teatro.Models.Obra", b =>
                 {
-                    b.Navigation("AsientosOcupados");
+                    b.Navigation("ObrasAsientos");
                 });
 
             modelBuilder.Entity("Teatro.Models.Usuario", b =>

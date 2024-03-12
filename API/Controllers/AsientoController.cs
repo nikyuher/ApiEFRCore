@@ -21,8 +21,13 @@ public class AsientoController : ControllerBase
     [HttpGet()]
     public ActionResult<List<Asiento>> GetAllObra() => _asientoService.GetAllAsiento();
 
-    [HttpGet("{id}")]
+    [HttpGet("estado/{estado}")]
+    public ActionResult<List<Asiento>> GetAllEstado(bool estado)
+    {
+       return  _asientoService.GetAsientoEstado(estado);
 
+    }
+    [HttpGet("{id}")]
     public ActionResult<Asiento> GetAsientoId(int id)
     {
         var obra = _asientoService.GetIdAsiento(id);
@@ -36,8 +41,20 @@ public class AsientoController : ControllerBase
     [HttpPost()]
     public IActionResult CreateAsiento(Asiento asiento)
     {
+
         _asientoService.CreateAsiento(asiento);
         return Ok(asiento);
+
+    }
+
+    [HttpPost("ocupados")]
+    public IActionResult AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
+    {
+
+        _asientoService.AgregarAsientoAObra(ocupadoDTO);
+
+        return Ok("Asiento agregado exitosamente a la obra.");
+
     }
 
     [HttpPut("{id}")]
@@ -55,12 +72,29 @@ public class AsientoController : ControllerBase
         _asientoService.UpdateAsiento(asiento);
 
         return Ok(asiento);
+    }
 
+    [HttpPut("{id}/estado")]
+    public IActionResult UpdateEstado(int id, AsientoPutEstadoDTO asiento)
+    {
+
+        if (id != asiento.AsientoId)
+            return BadRequest();
+
+        var existingAsiento = _asientoService.GetIdAsiento(id);
+
+        if (existingAsiento is null)
+            return NotFound();
+
+        _asientoService.UpdateEstado(asiento);
+
+        return Ok(asiento);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteAsiento(int id)
     {
+
         var asiento = _asientoService.GetIdAsiento(id);
 
         if (asiento is null)
@@ -69,6 +103,7 @@ public class AsientoController : ControllerBase
         _asientoService.DeleteAsiento(id);
 
         return Ok();
+
     }
 
 }

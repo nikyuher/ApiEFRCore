@@ -1,8 +1,7 @@
 namespace Teatro.Data;
 
-using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks.Dataflow;
+using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
 
 public class AsientoRepository : IAsientoRepository
@@ -14,29 +13,62 @@ public class AsientoRepository : IAsientoRepository
         _context = context;
     }
 
-
     public List<Asiento> GetAllAsiento()
     {
         return _context.Asientos.ToList();
     }
 
-    public Asiento GetIdAsiento(int IdObra)
+    public List<Asiento> GetAsientoEstado(bool estado){
+
+        return _context.Asientos.Where(p => p.Estado == estado).ToList();
+    }
+
+    public Asiento GetIdAsiento(int idAsiento)
     {
-        var obra = _context.Asientos.FirstOrDefault(p => p.AsientoId == IdObra);
+        var obra = _context.Asientos.FirstOrDefault(p => p.AsientoId == idAsiento);
 
         if (obra is null)
         {
-            throw new InvalidOperationException($"No se encontro la Obra con el id {IdObra}");
+            throw new InvalidOperationException($"No se encontro el Asiento con el id {idAsiento}");
         }
 
         return obra;
     }
 
-    public void CreateAsiento(Asiento obra)
+    public void CreateAsiento(Asiento asiento)
     {
-        _context.Asientos.Add(obra);
+        _context.Asientos.Add(asiento);
         SaveChanges();
     }
+
+    public void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
+    {
+        var asientoOriginal = GetIdAsiento(ocupadoDTO.AsientoId);
+
+        if (asientoOriginal is null)
+        {
+            throw new InvalidOperationException($"No se encontró el Asiento con el ID {ocupadoDTO.AsientoId}");
+        }
+
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == ocupadoDTO.ObraId);
+
+        if (obra is null)
+        {
+            throw new InvalidOperationException($"No se encontró la Obra con el ID {ocupadoDTO.ObraId}");
+        }
+
+        var asientoNuevo = new Asiento
+        {
+            NombreAsiento = asientoOriginal.NombreAsiento,
+            Estado = true 
+        };
+
+        obra.AsientosOcupados.Add(asientoNuevo);
+
+        SaveChanges();
+    }
+
+
 
     public void UpdateAsiento(Asiento asiento)
     {
@@ -44,10 +76,24 @@ public class AsientoRepository : IAsientoRepository
 
         if (update is null)
         {
-            throw new KeyNotFoundException("No se encontro la obra a actualizar.");
+            throw new KeyNotFoundException("No se encontro el Asiento a actualizar.");
         }
 
         _context.Entry(update).CurrentValues.SetValues(asiento);
+        SaveChanges();
+    }
+
+    public void UpdateEstado(AsientoPutEstadoDTO asiento)
+    {
+        var update = GetIdAsiento(asiento.AsientoId);
+
+        if (update is null)
+        {
+            throw new KeyNotFoundException("No se encontro el Asiento a actualizar.");
+        }
+
+        update.Estado = asiento.Estado;
+
         SaveChanges();
     }
 
@@ -57,12 +103,9 @@ public class AsientoRepository : IAsientoRepository
 
         if (asiento is null)
         {
-            throw new InvalidOperationException($"No se encontro la Obra con el id {idAsiento}");
+            throw new InvalidOperationException($"No se encontro el Asiento con el id {idAsiento}");
         }
 
-        var DetalleSala = _context.Reservas.Where(ob => ob.AsientoId == idAsiento);
-
-        _context.Reservas.RemoveRange(DetalleSala);
         _context.Asientos.Remove(asiento);
         SaveChanges();
     }

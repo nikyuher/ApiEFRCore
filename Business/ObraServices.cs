@@ -17,12 +17,23 @@ public class ObraServices : IObraServices
         return _obraRepository.GetAllObras();
     }
 
+    public List<Obra> GetAllGeneros(string generoObra)
+    {
+        return _obraRepository.GetAllGeneros(generoObra);
+    }
+
+    public ObraGetAsientosDTO GetAsientosObra(int obraId)
+    {
+       return _obraRepository.GetAsientosObra(obraId);
+    }
+
     public Obra GetIdObra(int idObra)
     {
         return _obraRepository.GetIdObra(idObra);
     }
 
-    public void CreateObra(Obra obra)
+
+    public void CreateObra(ObraAddDTO obra)
     {
         _obraRepository.CreateObra(obra);
     }
@@ -30,6 +41,15 @@ public class ObraServices : IObraServices
     public void UpdateObra(Obra obra)
     {
         _obraRepository.UpdateObra(obra);
+    }
+
+    public void UpdateObraImg(ObraPutImgDTO imagen)
+    {
+        _obraRepository.UpdateObraImg(imagen);
+    }
+    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+    {
+        _obraRepository.UpdateObraInfo(obraInfo);
     }
 
     public void DeleteObra(int obra)
