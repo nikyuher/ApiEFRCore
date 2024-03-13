@@ -1,27 +1,14 @@
 namespace Teatro.Models;
-using System.ComponentModel.DataAnnotations;
-public class Obra
+public class ObraGetDTO
 {
-    [Key]
     public int ObraId { get; set; }
-
     public byte[]? Imagen { get; set; }
-
-    [Required]
     public string? Genero { get; set; }
-
-    [Required]
     public string? Título { get; set; }
-
-    [Required]
     public string? Descripción { get; set; }
-    
-    [Required]
-    public DateTime FechaHora { get; set; }
-
-    [Required]
+    public string? DiaSemana { get; set; }
+    public int Hora { get; set; }
+    public string? Minuto { get; set; }
     public decimal PrecioEntrada { get; set; }
-
     public List<Asiento> AsientosOcupados { get; set; } = new List<Asiento>();
-
 }

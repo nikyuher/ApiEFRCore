@@ -35,26 +35,13 @@ public class UsuarioController : ControllerBase
 
     }
 
-    [HttpGet("login")]
-
-    public ActionResult<UsuarioGetLoginDTO> GetLogin(string email, string password)
-    {
-
-        var user = _usuarioService.GetLogin(email,password);
-
-        if (user == null)
-            return NotFound();
-
-        return user;
-
-    }
-
     [HttpPost("login")]
-    public IActionResult Login(UsuarioGetDTO loginRequest)
+    public IActionResult Login([FromBody] UsuarioLoginDTO loginRequest)
     {
         try
         {
-            var usuario = _usuarioService.Login(loginRequest.CorreoElectronico, loginRequest.Contraseña);
+            var usuario = _usuarioService.Login(loginRequest);
+
             return Ok(usuario);
         }
         catch (Exception ex)
@@ -64,8 +51,8 @@ public class UsuarioController : ControllerBase
     }
     
 
-    [HttpPost()]
-    public IActionResult CreateUsuario(UsuarioAddDTO user)
+    [HttpPost("register")]
+    public IActionResult CreateUsuario([FromBody] UsuarioAddDTO user)
     {
         try
         {
@@ -79,7 +66,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateUsuario(int id, UsuarioPutDTO user)
+    public IActionResult UpdateUsuario(int id , [FromBody] UsuarioPutDTO user)
     {
 
         if (id != user.UsuarioId)

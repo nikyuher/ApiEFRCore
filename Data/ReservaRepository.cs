@@ -22,7 +22,9 @@ public class ReservaRepository : IReservaRepository
                 ReservaId = reserva.ReservaId,
                 UsuarioId = reserva.UsuarioId,
                 ObraId = reserva.ObraId,
-                Obra = reserva.Obra
+                Obra = reserva.Obra,
+                AsientoId = reserva.AsientoId,
+                Asiento = reserva.Asiento
             }).ToList();
 
         return reservasDTO;
@@ -49,7 +51,9 @@ public class ReservaRepository : IReservaRepository
                                 ReservaId = r.ReservaId,
                                 UsuarioId = r.UsuarioId,
                                 ObraId = r.ObraId,
-                                Obra = r.Obra
+                                Obra = r.Obra,
+                                AsientoId = r.AsientoId,
+                                Asiento = r.Asiento
                             })
                             .ToList();
         return reservasDTO;
@@ -59,6 +63,7 @@ public class ReservaRepository : IReservaRepository
     {
         var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reservaDTO.UsuarioId);
         var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
+        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
 
         if (usuario == null || obra == null)
         {
@@ -69,6 +74,7 @@ public class ReservaRepository : IReservaRepository
         {
             UsuarioId = reservaDTO.UsuarioId,
             Obra = obra,
+            Asiento = asiento
         };
 
         usuario.ListReservas.Add(reserva);

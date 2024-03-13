@@ -52,61 +52,27 @@ public class UsuarioRepository : IUsuarioRepository
         return usuarioDTO;
     }
 
-    public UsuarioGetLoginDTO GetLogin(string email, string password)
+
+    public Usuario Login(UsuarioLoginDTO loginDTO)
     {
-        if (string.IsNullOrWhiteSpace(email))
+        if (string.IsNullOrWhiteSpace(loginDTO.CorreoElectronico))
         {
-            throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(email));
+            throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(loginDTO.CorreoElectronico));
         }
 
-        if (string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(loginDTO.Contraseña))
         {
-            throw new ArgumentException("La contraseña no puede estar vacía", nameof(password));
+            throw new ArgumentException("La contraseña no puede estar vacía", nameof(loginDTO.Contraseña));
         }
 
-        var usuario = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email && u.Contraseña == password);
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == loginDTO.CorreoElectronico && u.Contraseña == loginDTO.Contraseña);
 
         if (usuario is null)
         {
             throw new InvalidOperationException("Credenciales incorrectas");
         }
 
-        var usuarioLoginDTO = new UsuarioGetLoginDTO
-        {
-            UsuarioId = usuario.UsuarioId,
-            Rol = usuario.Rol,
-            Nombre = usuario.Nombre
-        };
-
-        return usuarioLoginDTO;
-    }
-
-    public UsuarioGetDTO Login(string email, string password)
-    {
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            throw new ArgumentException("El correo electrónico no puede estar vacío", nameof(email));
-        }
-
-        if (string.IsNullOrWhiteSpace(password))
-        {
-            throw new ArgumentException("La contraseña no puede estar vacía", nameof(password));
-        }
-
-        var usuario = _context.Usuarios.FirstOrDefault(u => u.CorreoElectronico == email && u.Contraseña == password);
-
-        if (usuario is null)
-        {
-            throw new InvalidOperationException("Credenciales incorrectas");
-        }
-
-        var usuarioDTO = new UsuarioGetDTO
-        {
-            CorreoElectronico = usuario.CorreoElectronico,
-            Contraseña = usuario.Contraseña,
-        };
-
-        return usuarioDTO;
+        return usuario;
     }
 
     public Usuario GetIdUser(int idUser)

@@ -6,5 +6,9 @@ public class ObraAddDTO
     public string? Genero { get; set; }
     public string? Título { get; set; }
     public string? Descripción { get; set; }
+    public string? DiaSemana { get; set; }
+    public int Hora { get; set; }
+    public int Minuto { get; set; }
+
     public decimal PrecioEntrada { get; set; }
 }

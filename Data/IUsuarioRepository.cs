@@ -7,8 +7,7 @@ public interface IUsuarioRepository
     public List<UsuarioGetDTO> GetAllUsuarios();
 
     public UsuarioGetDTO GetIdUsuarioDTO(int idUsuario);
-    public UsuarioGetLoginDTO GetLogin(string email, string password);
-    public UsuarioGetDTO Login(string email, string password);
+    public Usuario Login(UsuarioLoginDTO loginDTO);
 
     void CreateUsuario(UsuarioAddDTO usuarioDto);
 

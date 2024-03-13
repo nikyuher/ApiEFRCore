@@ -31,6 +31,11 @@ public class TeatroContext : DbContext
             .WithMany()
             .HasForeignKey(r => r.ObraId);
 
+        modelBuilder.Entity<Reserva>()
+        .HasOne(r => r.Asiento)
+        .WithMany()
+        .HasForeignKey(r => r.AsientoId);
+
         //Creacion Cuenta Administrador
         modelBuilder.Entity<Usuario>().HasData(new Usuario
         {

@@ -22,7 +22,7 @@ public class ObraController : ControllerBase
     public ActionResult<List<Obra>> GetAllObra() => _obraService.GetAllObras();
 
     [HttpGet("generos/{genero}")]
-    public ActionResult<List<Obra>> GetAllGenero(string genero) => _obraService.GetAllGeneros(genero);
+    public ActionResult<List<ObraGetDTO>> GetAllGenero(string genero) => _obraService.GetAllGeneros(genero);
 
     [HttpGet("{id}/asientos")]
     public ActionResult<ObraGetAsientosDTO> GetAsientosObra(int id)
@@ -39,7 +39,7 @@ public class ObraController : ControllerBase
 
 
     [HttpGet("{id}")]
-    public ActionResult<Obra> GetObraId(int id)
+    public ActionResult<ObraGetDTO> GetObraId(int id)
     {
 
         var obra = _obraService.GetIdObra(id);

@@ -17,7 +17,7 @@ public class ObraServices : IObraServices
         return _obraRepository.GetAllObras();
     }
 
-    public List<Obra> GetAllGeneros(string generoObra)
+    public List<ObraGetDTO> GetAllGeneros(string generoObra)
     {
         return _obraRepository.GetAllGeneros(generoObra);
     }
@@ -27,7 +27,7 @@ public class ObraServices : IObraServices
        return _obraRepository.GetAsientosObra(obraId);
     }
 
-    public Obra GetIdObra(int idObra)
+    public ObraGetDTO GetIdObra(int idObra)
     {
         return _obraRepository.GetIdObra(idObra);
     }

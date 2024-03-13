@@ -5,9 +5,9 @@ using Teatro.Models;
 public interface IObraServices
 {
     public List<Obra> GetAllObras();
-    public List<Obra> GetAllGeneros(string generoObra);
+    public List<ObraGetDTO> GetAllGeneros(string generoObra);
     public ObraGetAsientosDTO GetAsientosObra(int obraId);
-    public Obra GetIdObra(int IdObra);
+    public ObraGetDTO GetIdObra(int IdObra);
     void CreateObra(ObraAddDTO obra);
     void UpdateObra(Obra obra);
     void UpdateObraImg(ObraPutImgDTO imagen);
