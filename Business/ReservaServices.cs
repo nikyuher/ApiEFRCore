@@ -28,10 +28,10 @@ public class ReservaServices : IReservaServices
         return _reservaRepository.GetIdReserva(idReserva);
     }
 
-    public void CreateReserva(ReservaAddDTO reserva)
-    {
-        _reservaRepository.CreateReserva(reserva);
-    }
+public void CreateReservas(List<ReservaAddDTO> reservas)
+{
+    _reservaRepository.CreateReservas(reservas);
+}
 
     public void UpdateReserva(ReservaPutDTO reserva)
     {

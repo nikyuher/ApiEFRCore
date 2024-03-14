@@ -31,7 +31,7 @@ public class AsientoServices : IAsientoServices
         _asientoRepository.CreateAsiento(asiento);
     }
 
-    public void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
+    public void AgregarAsientoAObra(List<AsientoOcupadoDTO> ocupadoDTO)
     {
         _asientoRepository.AgregarAsientoAObra(ocupadoDTO);
     }

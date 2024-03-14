@@ -18,7 +18,8 @@ public class AsientoRepository : IAsientoRepository
         return _context.Asientos.ToList();
     }
 
-    public List<Asiento> GetAsientoEstado(bool estado){
+    public List<Asiento> GetAsientoEstado(bool estado)
+    {
 
         return _context.Asientos.Where(p => p.Estado == estado).ToList();
     }
@@ -41,33 +42,35 @@ public class AsientoRepository : IAsientoRepository
         SaveChanges();
     }
 
-    public void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO)
+    public void AgregarAsientoAObra(List<AsientoOcupadoDTO> ocupadoDTO)
     {
-        var asientoOriginal = GetIdAsiento(ocupadoDTO.AsientoId);
-
-        if (asientoOriginal is null)
+        foreach (var dto in ocupadoDTO)
         {
-            throw new InvalidOperationException($"No se encontró el Asiento con el ID {ocupadoDTO.AsientoId}");
+            var asientoOriginal = _context.Asientos.FirstOrDefault(a => a.AsientoId == dto.AsientoId);
+
+            if (asientoOriginal == null)
+            {
+                throw new InvalidOperationException($"No se encontró el Asiento con el ID {dto.AsientoId}");
+            }
+
+            var obra = _context.Obras.FirstOrDefault(o => o.ObraId == dto.ObraId);
+
+            if (obra == null)
+            {
+                throw new InvalidOperationException($"No se encontró la Obra con el ID {dto.ObraId}");
+            }
+
+            var asientoNuevo = new Asiento
+            {
+                NombreAsiento = asientoOriginal.NombreAsiento,
+                Estado = true
+            };
+
+            obra.AsientosOcupados.Add(asientoNuevo);
         }
 
-        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == ocupadoDTO.ObraId);
-
-        if (obra is null)
-        {
-            throw new InvalidOperationException($"No se encontró la Obra con el ID {ocupadoDTO.ObraId}");
-        }
-
-        var asientoNuevo = new Asiento
-        {
-            NombreAsiento = asientoOriginal.NombreAsiento,
-            Estado = true 
-        };
-
-        obra.AsientosOcupados.Add(asientoNuevo);
-
-        SaveChanges();
+        _context.SaveChanges();
     }
-
 
 
     public void UpdateAsiento(Asiento asiento)

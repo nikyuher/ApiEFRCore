@@ -59,27 +59,31 @@ public class ReservaRepository : IReservaRepository
         return reservasDTO;
     }
 
-    public void CreateReserva(ReservaAddDTO reservaDTO)
+public void CreateReservas(List<ReservaAddDTO> reservas)
+{
+    foreach (var reserva in reservas)
     {
-        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reservaDTO.UsuarioId);
-        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reservaDTO.ObraId);
-        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reservaDTO.AsientoId);
+        var usuario = _context.Usuarios.Include(u => u.ListReservas).FirstOrDefault(u => u.UsuarioId == reserva.UsuarioId);
+        var obra = _context.Obras.FirstOrDefault(o => o.ObraId == reserva.ObraId);
+        var asiento = _context.Asientos.FirstOrDefault(a => a.AsientoId == reserva.AsientoId);
 
         if (usuario == null || obra == null)
         {
             throw new InvalidOperationException($"No se encontró el usuario, la obra o el asiento especificado.");
         }
 
-        var reserva = new Reserva
+        var nuevaReserva = new Reserva
         {
-            UsuarioId = reservaDTO.UsuarioId,
+            UsuarioId = reserva.UsuarioId,
             Obra = obra,
             Asiento = asiento
         };
 
-        usuario.ListReservas.Add(reserva);
-        _context.SaveChanges();
+        usuario.ListReservas.Add(nuevaReserva);
     }
+
+    _context.SaveChanges();
+}
 
 
     public void UpdateReserva(ReservaPutDTO reservaDTO)

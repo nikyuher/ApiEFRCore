@@ -35,19 +35,19 @@ public class ReservaController : ControllerBase
 
     }
 
-    [HttpPost("{IdUser}")]
-    public IActionResult CreateReserva(ReservaAddDTO reserva)
+[HttpPost("{IdUser}")]
+public IActionResult CreateReserva(List<ReservaAddDTO> reservas)
+{
+    try
     {
-        try
-        {
-            _reservaService.CreateReserva(reserva);
-            return Ok(reserva);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        _reservaService.CreateReservas(reservas);
+        return Ok(reservas);
     }
+    catch (Exception ex)
+    {
+        return BadRequest(new { message = ex.Message });
+    }
+}
 
     [HttpPut("{id}")]
     public IActionResult UpdateReserva(int id, ReservaPutDTO reserva)

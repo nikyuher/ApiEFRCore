@@ -9,7 +9,7 @@ public interface IReservaRepository
 
     public Reserva GetIdReserva(int idReserva);
 
-    void CreateReserva(ReservaAddDTO reserva);
+    void CreateReservas(List<ReservaAddDTO> reservas);
 
     void UpdateReserva(ReservaPutDTO reserva);
 

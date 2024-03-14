@@ -8,7 +8,7 @@ public interface IAsientoServices
     public List<Asiento> GetAsientoEstado(bool estado);
     public Asiento GetIdAsiento(int IdAsiento);
     void CreateAsiento(Asiento asiento);
-    void AgregarAsientoAObra(AsientoOcupadoDTO ocupadoDTO);
+    void AgregarAsientoAObra(List<AsientoOcupadoDTO> ocupadoDTO);
     void UpdateAsiento(Asiento asiento);
     void UpdateEstado(AsientoPutEstadoDTO asiento);
     void DeleteAsiento(int idAsiento);
