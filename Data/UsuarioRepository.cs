@@ -21,8 +21,7 @@ public class UsuarioRepository : IUsuarioRepository
             UsuarioId = usuario.UsuarioId,
             Rol = usuario.Rol,
             Nombre = usuario.Nombre,
-            CorreoElectronico = usuario.CorreoElectronico,
-            Contraseña = usuario.Contraseña
+            CorreoElectronico = usuario.CorreoElectronico
         }).ToList();
 
         return usuariosDTO;
@@ -45,8 +44,7 @@ public class UsuarioRepository : IUsuarioRepository
         {
             UsuarioId = usuario.UsuarioId,
             Nombre = usuario.Nombre,
-            CorreoElectronico = usuario.CorreoElectronico,
-            Contraseña = usuario.Contraseña
+            CorreoElectronico = usuario.CorreoElectronico
         };
 
         return usuarioDTO;

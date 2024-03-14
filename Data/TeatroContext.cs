@@ -26,6 +26,10 @@ public class TeatroContext : DbContext
             .IsUnique();
 
         //Relacion Reservas a Usuario
+        modelBuilder.Entity<Usuario>()
+            .HasMany(u => u.ListReservas) 
+            .WithOne()  
+            .HasForeignKey(r => r.UsuarioId);
         modelBuilder.Entity<Reserva>()
             .HasOne(r => r.Obra)
             .WithMany()

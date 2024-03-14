@@ -37,7 +37,7 @@ public class ObraRepository : IObraRepository
             Título = obra.Título,
             Descripción = obra.Descripción,
             DiaSemana = obra.FechaHora.DayOfWeek.ToString(),
-            Hora = obra.FechaHora.Hour,
+            Hora = obra.FechaHora.Hour.ToString("00"),
             Minuto = obra.FechaHora.Minute.ToString("00"),
             PrecioEntrada = obra.PrecioEntrada,
             AsientosOcupados = obra.AsientosOcupados
@@ -48,7 +48,7 @@ public class ObraRepository : IObraRepository
 
     public ObraGetAsientosDTO GetAsientosObra(int obraId)
     {
-        var obra = GetIdObra(obraId);
+        var obra = IdObra(obraId);
 
         if (obra == null)
         {
@@ -82,7 +82,7 @@ public class ObraRepository : IObraRepository
             Título = obra.Título,
             Descripción = obra.Descripción,
             DiaSemana = obra.FechaHora.DayOfWeek.ToString(),
-            Hora = obra.FechaHora.Hour,
+            Hora = obra.FechaHora.Hour.ToString("00"),
             Minuto = obra.FechaHora.Minute.ToString("00"),
             PrecioEntrada = obra.PrecioEntrada
         };
