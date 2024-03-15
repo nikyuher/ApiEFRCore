@@ -6,9 +6,7 @@ public class ObraGetDTO
     public string? Genero { get; set; }
     public string? Título { get; set; }
     public string? Descripción { get; set; }
-    public string? DiaSemana { get; set; }
-    public string? Hora { get; set; }
-    public string? Minuto { get; set; }
+    public DateTime FechaHora { get; set; }
     public decimal PrecioEntrada { get; set; }
     public List<Asiento> AsientosOcupados { get; set; } = new List<Asiento>();
 }

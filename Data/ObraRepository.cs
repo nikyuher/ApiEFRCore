@@ -2,7 +2,7 @@ namespace Teatro.Data;
 
 using Microsoft.EntityFrameworkCore;
 using Teatro.Models;
-
+using System.Globalization;
 public class ObraRepository : IObraRepository
 {
     private readonly TeatroContext _context;
@@ -36,9 +36,7 @@ public class ObraRepository : IObraRepository
             Genero = obra.Genero,
             Título = obra.Título,
             Descripción = obra.Descripción,
-            DiaSemana = obra.FechaHora.DayOfWeek.ToString(),
-            Hora = obra.FechaHora.Hour.ToString("00"),
-            Minuto = obra.FechaHora.Minute.ToString("00"),
+            FechaHora = obra.FechaHora,
             PrecioEntrada = obra.PrecioEntrada,
             AsientosOcupados = obra.AsientosOcupados
         }).ToList();
@@ -81,9 +79,7 @@ public class ObraRepository : IObraRepository
             Genero = obra.Genero,
             Título = obra.Título,
             Descripción = obra.Descripción,
-            DiaSemana = obra.FechaHora.DayOfWeek.ToString(),
-            Hora = obra.FechaHora.Hour.ToString("00"),
-            Minuto = obra.FechaHora.Minute.ToString("00"),
+            FechaHora = obra.FechaHora,
             PrecioEntrada = obra.PrecioEntrada
         };
 
@@ -94,12 +90,10 @@ public class ObraRepository : IObraRepository
 
     public void CreateObra(ObraAddDTO obra)
     {
-        if (obra.DiaSemana is null)
+        if (obra.FechaHora == default)
         {
-            throw new InvalidOperationException("El dia de la semana esta vacio");
+            throw new InvalidOperationException("La fecha y hora son inválidas");
         }
-
-        var fechaHora = ObtenerFechaHora(obra.DiaSemana, obra.Hora, obra.Minuto);
 
         var obraNueva = new Obra
         {
@@ -107,7 +101,7 @@ public class ObraRepository : IObraRepository
             Genero = obra.Genero,
             Título = obra.Título,
             Descripción = obra.Descripción,
-            FechaHora = fechaHora,
+            FechaHora = obra.FechaHora,
             PrecioEntrada = obra.PrecioEntrada
         };
 
@@ -117,7 +111,7 @@ public class ObraRepository : IObraRepository
 
     public void UpdateObra(Obra obra)
     {
-        var update = GetIdObra(obra.ObraId);
+        var update = IdObra(obra.ObraId);
 
         if (update is null)
         {
@@ -130,7 +124,7 @@ public class ObraRepository : IObraRepository
 
     public void UpdateObraImg(ObraPutImgDTO imagen)
     {
-        var obra = GetIdObra(imagen.ObraId);
+        var obra = IdObra(imagen.ObraId);
 
         if (obra == null)
         {
@@ -141,23 +135,30 @@ public class ObraRepository : IObraRepository
         SaveChanges();
     }
 
-    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
+{
+    var obra = IdObra(obraInfo.ObraId);
+
+    if (obra == null)
     {
-        var obra = IdObra(obraInfo.ObraId);
-
-        if (obra == null)
-        {
-            throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
-        }
-
-        obra.Genero = obraInfo.Genero;
-        obra.Título = obraInfo.Título;
-        obra.Descripción = obraInfo.Descripción;
-        obra.FechaHora = obraInfo.FechaHora;
-        obra.PrecioEntrada = obraInfo.PrecioEntrada;
-
-        SaveChanges();
+        throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
     }
+
+    if (obraInfo.FechaHora == default)
+    {
+        throw new InvalidOperationException("La fecha y hora son inválidas");
+    }
+
+    obra.Genero = obraInfo.Genero;
+    obra.Título = obraInfo.Título;
+    obra.Descripción = obraInfo.Descripción;
+    obra.FechaHora = obraInfo.FechaHora; 
+    obra.PrecioEntrada = obraInfo.PrecioEntrada;
+
+    SaveChanges();
+}
+
+
 
     public void DeleteObra(int idObra)
     {
@@ -179,20 +180,6 @@ public class ObraRepository : IObraRepository
     {
         _context.SaveChanges();
     }
-
-
-    private DateTime ObtenerFechaHora(string nombreDiaSemana, int hora, int minuto)
-    {
-        DayOfWeek diaSemana = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), nombreDiaSemana, true);
-
-        DateTime hoy = DateTime.Today;
-        int diasHastaProximoDia = ((int)diaSemana - (int)hoy.DayOfWeek + 7) % 7;
-        DateTime proximoDia = hoy.AddDays(diasHastaProximoDia);
-
-        DateTime fechaHora = new DateTime(proximoDia.Year, proximoDia.Month, proximoDia.Day, hora, minuto, 0);
-        return fechaHora;
-    }
-
 
     private Obra IdObra(int IdObra)
     {
