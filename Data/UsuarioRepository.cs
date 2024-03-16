@@ -67,7 +67,7 @@ public class UsuarioRepository : IUsuarioRepository
 
         if (usuario is null)
         {
-            throw new InvalidOperationException("Credenciales incorrectas");
+            throw new InvalidOperationException("Usuario o Correo Incorrecto");
         }
 
         return usuario;
@@ -88,6 +88,22 @@ public class UsuarioRepository : IUsuarioRepository
 
     public void CreateUsuario(UsuarioAddDTO usuarioDto)
     {
+
+        if (_context.Usuarios.Any(u => u.Nombre == usuarioDto.Nombre))
+        {
+            throw new ArgumentException("El nombre de usuario ya está en uso.");
+        }
+
+        if (_context.Usuarios.Any(u => u.CorreoElectronico == usuarioDto.CorreoElectronico))
+        {
+            throw new ArgumentException("El correo electrónico ya está en uso.");
+        }
+
+        if (_context.Usuarios.Any(u => u.Contraseña == usuarioDto.Contraseña))
+        {
+            throw new ArgumentException("La contraseña ya esta en uso.");
+        }
+
         var usuario = new Usuario
         {
             Nombre = usuarioDto.Nombre,

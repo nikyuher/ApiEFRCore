@@ -19,62 +19,108 @@ public class ReservaController : ControllerBase
     }
 
     [HttpGet()]
-    public ActionResult<List<ReservaGetDTO>> GetAllReserva() => _reservaService.GetAllReservas();
+    public ActionResult<List<ReservaGetDTO>> GetAllReserva()
+    {
+        try
+        {
+            _logger.LogInformation("Se ha solicitado obtener todas las reservas.");
+            return _reservaService.GetAllReservas();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener todas las reservas: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
+    }
 
     [HttpGet("usuario/{id}")]
 
     public ActionResult<List<ReservaGetDTO>> GetReservasUsuario(int id)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha solicitado obtener las reservas del usuario con ID: {id}.");
+            var reservas = _reservaService.GetReservasUsuario(id);
 
-        var reserva = _reservaService.GetReservasUsuario(id);
+            if (reservas == null)
+            {
+                _logger.LogWarning($"No se encontraron reservas para el usuario con ID: {id}.");
+                return NotFound();
+            }
 
-        if (reserva == null)
-            return NotFound();
-
-        return reserva;
-
+            return reservas;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener las reservas del usuario con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
-
-[HttpPost("{IdUser}")]
-public IActionResult CreateReserva(List<ReservaAddDTO> reservas)
-{
-    try
+    [HttpPost("{IdUser}")]
+    public IActionResult CreateReserva([FromBody] List<ReservaAddDTO> reservas)
     {
-        _reservaService.CreateReservas(reservas);
-        return Ok(reservas);
+        try
+        {
+            _logger.LogInformation("Se ha recibido una solicitud de creación de reservas.");
+            _reservaService.CreateReservas(reservas);
+            return Ok(reservas);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar crear reservas: {ex.Message}");
+            return BadRequest(new { message = ex.Message });
+        }
     }
-    catch (Exception ex)
-    {
-        return BadRequest(new { message = ex.Message });
-    }
-}
 
     [HttpPut("{id}")]
-    public IActionResult UpdateReserva(int id, ReservaPutDTO reserva)
+    public IActionResult UpdateReserva(int id, [FromBody] ReservaPutDTO reserva)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha recibido una solicitud de actualización de la reserva con ID: {id}.");
 
-        var existingUser = _reservaService.GetIdReserva(id);
+            var existingReserva = _reservaService.GetIdReserva(id);
 
-        if (existingUser is null)
-            return NotFound();
+            if (existingReserva is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna reserva con ID: {id}.");
+                return NotFound();
+            }
 
-        _reservaService.UpdateReserva(reserva);
+            _reservaService.UpdateReserva(reserva);
 
-        return Ok(reserva);
-
+            return Ok(reserva);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar actualizar la reserva con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteReserva(int id)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha recibido una solicitud para eliminar la reserva con ID: {id}.");
 
-        var user = _reservaService.GetIdReserva(id);
+            var reserva = _reservaService.GetIdReserva(id);
 
-        if (user is null)
-            return NotFound();
+            if (reserva is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna reserva con ID: {id}.");
+                return NotFound();
+            }
 
-        _reservaService.DeleteReserva(id);
+            _reservaService.DeleteReserva(id);
 
-        return Ok();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar eliminar la reserva con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 }

@@ -19,60 +19,118 @@ public class ObraController : ControllerBase
     }
 
     [HttpGet()]
-    public ActionResult<List<Obra>> GetAllObra() => _obraService.GetAllObras();
+    public ActionResult<List<Obra>> GetAllObra()
+    {
+        try
+        {
+            _logger.LogInformation("Se ha solicitado obtener todas las obras.");
+            return _obraService.GetAllObras();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener todas las obras: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
+    }
 
     [HttpGet("generos/{genero}")]
-    public ActionResult<List<ObraGetDTO>> GetAllGenero(string genero) => _obraService.GetAllGeneros(genero);
+    public ActionResult<List<ObraGetDTO>> GetAllGenero(string genero)
+    {
+        try
+        {
+            _logger.LogInformation($"Se ha solicitado obtener todas las obras del género: {genero}.");
+            return _obraService.GetAllGeneros(genero);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener todas las obras del género {genero}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
+    }
 
     [HttpGet("{id}/asientos")]
     public ActionResult<ObraGetAsientosDTO> GetAsientosObra(int id)
     {
-        var asientos = _obraService.GetAsientosObra(id);
-
-        if (asientos == null)
+        try
         {
-            return NotFound();
-        }
+            _logger.LogInformation($"Se ha solicitado obtener los asientos de la obra con ID: {id}.");
+            var asientos = _obraService.GetAsientosObra(id);
 
-        return Ok(asientos);
+            if (asientos == null)
+            {
+                _logger.LogWarning($"No se encontraron asientos para la obra con ID: {id}.");
+                return NotFound();
+            }
+
+            return Ok(asientos);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener los asientos de la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
 
     [HttpGet("{id}")]
     public ActionResult<ObraGetDTO> GetObraId(int id)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha solicitado obtener la obra con ID: {id}.");
+            var obra = _obraService.GetIdObra(id);
 
-        var obra = _obraService.GetIdObra(id);
-        _logger.LogInformation("peticion obra: " + id.ToString());
-        if (obra == null)
-            return NotFound();
+            if (obra == null)
+            {
+                _logger.LogWarning($"No se encontró ninguna obra con ID: {id}.");
+                return NotFound();
+            }
 
-        return obra;
-
+            return obra;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar obtener la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
     [HttpPost()]
-    public IActionResult CreateObra(ObraAddDTO obra)
+    public IActionResult CreateObra([FromBody] ObraAddDTO obra)
     {
-
-        _obraService.CreateObra(obra);
-        return Ok(obra);
-
+        try
+        {
+            _logger.LogInformation("Se ha recibido una solicitud de creación de obra.");
+            _obraService.CreateObra(obra);
+            return Ok(obra);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar crear la obra: {ex.Message}");
+            return BadRequest(new { message = ex.Message });
+        }
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateObra(int id, Obra obra)
+    public IActionResult UpdateObra(int id, [FromBody] Obra obra)
     {
-
         try
         {
+            _logger.LogInformation($"Se ha recibido una solicitud de actualización de la obra con ID: {id}.");
+
             if (id != obra.ObraId)
+            {
+                _logger.LogError("El ID de la obra en el cuerpo de la solicitud no coincide con el ID en la URL.");
                 return BadRequest();
+            }
 
             var existingObra = _obraService.GetIdObra(id);
 
             if (existingObra is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna obra con ID: {id}.");
                 return NotFound();
+            }
 
             _obraService.UpdateObra(obra);
 
@@ -80,60 +138,99 @@ public class ObraController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            _logger.LogError($"Error al intentar actualizar la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
         }
-
     }
 
     [HttpPut("img/{id}")]
-    public IActionResult UpdateObraImg(int id, ObraPutImgDTO obra)
+    public IActionResult UpdateObraImg(int id, [FromBody] ObraPutImgDTO obra)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha recibido una solicitud de actualización de la imagen de la obra con ID: {id}.");
 
-        if (id != obra.ObraId)
-            return BadRequest();
+            if (id != obra.ObraId)
+            {
+                _logger.LogError("El ID de la obra en el cuerpo de la solicitud no coincide con el ID en la URL.");
+                return BadRequest();
+            }
 
-        var existingObra = _obraService.GetIdObra(id);
+            var existingObra = _obraService.GetIdObra(id);
 
-        if (existingObra is null)
-            return NotFound();
+            if (existingObra is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna obra con ID: {id}.");
+                return NotFound();
+            }
 
-        _obraService.UpdateObraImg(obra);
+            _obraService.UpdateObraImg(obra);
 
-        return Ok(obra);
-
+            return Ok(obra);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar actualizar la imagen de la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
     [HttpPut("info/{id}")]
-    public IActionResult UpdateObraInfo(int id, ObraPutInfoDTO obra)
+    public IActionResult UpdateObraInfo(int id, [FromBody] ObraPutInfoDTO obra)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha recibido una solicitud de actualización de la información de la obra con ID: {id}.");
 
-        if (id != obra.ObraId)
-            return BadRequest();
+            if (id != obra.ObraId)
+            {
+                _logger.LogError("El ID de la obra en el cuerpo de la solicitud no coincide con el ID en la URL.");
+                return BadRequest();
+            }
 
-        var existingObra = _obraService.GetIdObra(id);
+            var existingObra = _obraService.GetIdObra(id);
 
-        if (existingObra is null)
-            return NotFound();
+            if (existingObra is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna obra con ID: {id}.");
+                return NotFound();
+            }
 
-        _obraService.UpdateObraInfo(obra);
+            _obraService.UpdateObraInfo(obra);
 
-        return Ok(obra);
-
+            return Ok(obra);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar actualizar la información de la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteObra(int id)
     {
+        try
+        {
+            _logger.LogInformation($"Se ha recibido una solicitud para eliminar la obra con ID: {id}.");
 
-        var obra = _obraService.GetIdObra(id);
+            var obra = _obraService.GetIdObra(id);
 
-        if (obra is null)
-            return NotFound();
+            if (obra is null)
+            {
+                _logger.LogWarning($"No se encontró ninguna obra con ID: {id}.");
+                return NotFound();
+            }
 
-        _obraService.DeleteObra(id);
+            _obraService.DeleteObra(id);
 
-        return Ok();
-
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar eliminar la obra con ID {id}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
     }
 
 }
