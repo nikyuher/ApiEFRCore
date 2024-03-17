@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teatro.Data;
 
@@ -11,9 +12,10 @@ using Teatro.Data;
 namespace Teatro.Data.Migrations
 {
     [DbContext(typeof(TeatroContext))]
-    partial class TeatroContextModelSnapshot : ModelSnapshot
+    [Migration("20240317202324_AgregacionDatos")]
+    partial class AgregacionDatos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,189 +232,189 @@ namespace Teatro.Data.Migrations
                         new
                         {
                             ObraId = 1,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Extraña Pareja",
                             FechaHora = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Comedia",
                             PrecioEntrada = 10m,
                             Título = "La Extraña Pareja"
                         },
                         new
                         {
                             ObraId = 2,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Comedia de las Equivocaciones",
                             FechaHora = new DateTime(2022, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Comedia",
                             PrecioEntrada = 10m,
                             Título = "La Comedia de las Equivocaciones"
                         },
                         new
                         {
                             ObraId = 3,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Un Tranvía llamado Deseo",
                             FechaHora = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Comedia",
                             PrecioEntrada = 10m,
                             Título = "Un Tranvía llamado Deseo"
                         },
                         new
                         {
                             ObraId = 4,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Drácula",
                             FechaHora = new DateTime(2022, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "terror",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "Drácula"
                         },
                         new
                         {
                             ObraId = 5,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Fantasma de Gantersville",
                             FechaHora = new DateTime(2022, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "terror",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "El Fantasma de Gantersville"
                         },
                         new
                         {
                             ObraId = 6,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Mujer de Negro",
                             FechaHora = new DateTime(2022, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "terror",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "La Mujer de Negro"
                         },
                         new
                         {
                             ObraId = 7,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Edipo Rey",
                             FechaHora = new DateTime(2022, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "drama",
+                            Genero = "Drama",
                             PrecioEntrada = 20m,
                             Título = "Edipo Rey"
                         },
                         new
                         {
                             ObraId = 8,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Casa de Bernarda",
                             FechaHora = new DateTime(2022, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "drama",
+                            Genero = "Drama",
                             PrecioEntrada = 20m,
                             Título = "La Casa de Bernarda"
                         },
                         new
                         {
                             ObraId = 9,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Muerte de un Viajero",
                             FechaHora = new DateTime(2022, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "drama",
+                            Genero = "Drama",
                             PrecioEntrada = 20m,
                             Título = "Muerte de un Viajero"
                         },
                         new
                         {
                             ObraId = 10,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Hamlet",
                             FechaHora = new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Tragedia",
                             PrecioEntrada = 25m,
                             Título = "Hamlet"
                         },
                         new
                         {
                             ObraId = 11,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Macbeth",
                             FechaHora = new DateTime(2022, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Tragedia",
                             PrecioEntrada = 25m,
                             Título = "Macbeth"
                         },
                         new
                         {
                             ObraId = 12,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Romeo y Julieta",
                             FechaHora = new DateTime(2022, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Tragedia",
                             PrecioEntrada = 25m,
                             Título = "Romeo y Julieta"
                         },
                         new
                         {
                             ObraId = 13,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Fantasma de la Ópera",
                             FechaHora = new DateTime(2022, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "musical",
+                            Genero = "Musical",
                             PrecioEntrada = 30m,
                             Título = "El Fantasma de la Ópera"
                         },
                         new
                         {
                             ObraId = 14,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Avaro",
                             FechaHora = new DateTime(2022, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "musical",
+                            Genero = "Musical",
                             PrecioEntrada = 30m,
                             Título = "El Avaro"
                         },
                         new
                         {
                             ObraId = 15,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de Frankenstein",
                             FechaHora = new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "musical",
+                            Genero = "Musical",
                             PrecioEntrada = 30m,
                             Título = "Frankenstein"
                         },
                         new
                         {
                             ObraId = 16,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Fantasma de la Opera",
                             FechaHora = new DateTime(2022, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "El Fantasma de la Opera"
                         },
                         new
                         {
                             ObraId = 17,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Rey Lear",
                             FechaHora = new DateTime(2022, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "El Rey Lear"
                         },
                         new
                         {
                             ObraId = 18,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Noche de Reyes",
                             FechaHora = new DateTime(2022, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "comedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "La Noche de Reyes"
                         },
                         new
                         {
                             ObraId = 19,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de El Inspector",
                             FechaHora = new DateTime(2022, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "El Inspector"
                         },
                         new
                         {
                             ObraId = 20,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Comedia de las Equivocaciones",
                             FechaHora = new DateTime(2022, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "La Comedia de las Equivocaciones"
                         },
                         new
                         {
                             ObraId = 21,
-                            Descripción = "Una historia llena de giros inesperados y emociones intensas. Explora temas profundos como el amor, la traición y la redención, mientras los personajes enfrentan desafíos que los llevarán al límite de sus capacidades y convicciones.",
+                            Descripción = "Descripción de La Caída de Bernarda",
                             FechaHora = new DateTime(2022, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Genero = "tragedia",
+                            Genero = "Terror",
                             PrecioEntrada = 15m,
                             Título = "La Caída de Bernarda"
                         });
