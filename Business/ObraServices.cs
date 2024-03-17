@@ -24,7 +24,7 @@ public class ObraServices : IObraServices
 
     public ObraGetAsientosDTO GetAsientosObra(int obraId)
     {
-       return _obraRepository.GetAsientosObra(obraId);
+        return _obraRepository.GetAsientosObra(obraId);
     }
 
     public ObraGetDTO GetIdObra(int idObra)
@@ -32,6 +32,9 @@ public class ObraServices : IObraServices
         return _obraRepository.GetIdObra(idObra);
     }
 
+    public List<ObraGetDTO> BuscarPorTitulo(string titulo){
+        return _obraRepository.BuscarPorTitulo( titulo);
+    }
 
     public void CreateObra(ObraAddDTO obra)
     {

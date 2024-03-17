@@ -33,7 +33,31 @@ public class ObraController : ControllerBase
         }
     }
 
-    [HttpGet("generos/{genero}")]
+    [HttpGet("search")]
+    public  ActionResult<List<ObraGetDTO>> GetObrasTitulo(string titulo)
+    {
+        try
+        {
+            _logger.LogInformation($"Se ha solicitado buscar obras por el título: {titulo}.");
+
+            var obras = _obraService.BuscarPorTitulo(titulo);
+
+            if (obras == null || obras.Count == 0)
+            {
+                _logger.LogWarning($"No se encontraron obras con el título: {titulo}.");
+                return NotFound();
+            }
+
+            return Ok(obras);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error al intentar buscar obras por título {titulo}: {ex.Message}");
+            return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
+        }
+    }
+
+    [HttpGet("generos")]
     public ActionResult<List<ObraGetDTO>> GetAllGenero(string genero)
     {
         try
@@ -111,7 +135,7 @@ public class ObraController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut()]
     public IActionResult UpdateObra(int id, [FromBody] Obra obra)
     {
         try
@@ -143,7 +167,7 @@ public class ObraController : ControllerBase
         }
     }
 
-    [HttpPut("img/{id}")]
+    [HttpPut("img")]
     public IActionResult UpdateObraImg(int id, [FromBody] ObraPutImgDTO obra)
     {
         try
@@ -175,7 +199,7 @@ public class ObraController : ControllerBase
         }
     }
 
-    [HttpPut("info/{id}")]
+    [HttpPut("info")]
     public IActionResult UpdateObraInfo(int id, [FromBody] ObraPutInfoDTO obra)
     {
         try
@@ -207,7 +231,7 @@ public class ObraController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete()]
     public IActionResult DeleteObra(int id)
     {
         try

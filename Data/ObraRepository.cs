@@ -44,6 +44,25 @@ public class ObraRepository : IObraRepository
         return obraDTO;
     }
 
+    public List<ObraGetDTO> BuscarPorTitulo(string titulo)
+    {
+        var obras = _context.Obras
+            .Where(p => p.Título.ToLower().Contains(titulo.ToLower()))
+            .Include(p => p.AsientosOcupados)
+            .ToList();
+
+        var obraDTO = obras.Select(obra => new ObraGetDTO
+        {
+            ObraId = obra.ObraId,
+            Imagen = obra.Imagen,
+            Genero = obra.Genero,
+            Título = obra.Título,
+            Descripción = obra.Descripción,
+        }).ToList();
+
+        return obraDTO;
+    }
+
     public ObraGetAsientosDTO GetAsientosObra(int obraId)
     {
         var obra = IdObra(obraId);
@@ -135,28 +154,28 @@ public class ObraRepository : IObraRepository
         SaveChanges();
     }
 
-public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
-{
-    var obra = IdObra(obraInfo.ObraId);
-
-    if (obra == null)
+    public void UpdateObraInfo(ObraPutInfoDTO obraInfo)
     {
-        throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
+        var obra = IdObra(obraInfo.ObraId);
+
+        if (obra == null)
+        {
+            throw new KeyNotFoundException($"No se encontró la obra con el ID {obraInfo.ObraId}.");
+        }
+
+        if (obraInfo.FechaHora == default)
+        {
+            throw new InvalidOperationException("La fecha y hora son inválidas");
+        }
+
+        obra.Genero = obraInfo.Genero;
+        obra.Título = obraInfo.Título;
+        obra.Descripción = obraInfo.Descripción;
+        obra.FechaHora = obraInfo.FechaHora;
+        obra.PrecioEntrada = obraInfo.PrecioEntrada;
+
+        SaveChanges();
     }
-
-    if (obraInfo.FechaHora == default)
-    {
-        throw new InvalidOperationException("La fecha y hora son inválidas");
-    }
-
-    obra.Genero = obraInfo.Genero;
-    obra.Título = obraInfo.Título;
-    obra.Descripción = obraInfo.Descripción;
-    obra.FechaHora = obraInfo.FechaHora; 
-    obra.PrecioEntrada = obraInfo.PrecioEntrada;
-
-    SaveChanges();
-}
 
 
 

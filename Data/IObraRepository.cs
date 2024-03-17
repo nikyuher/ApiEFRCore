@@ -6,6 +6,7 @@ public interface IObraRepository
     public List<Obra> GetAllObras();
     public List<ObraGetDTO> GetAllGeneros(string generoObra);
     public ObraGetAsientosDTO GetAsientosObra(int obraId);
+    public List<ObraGetDTO> BuscarPorTitulo(string titulo);
     public ObraGetDTO GetIdObra(int IdObra);
     void CreateObra(ObraAddDTO obra);
     void UpdateObra(Obra obra);

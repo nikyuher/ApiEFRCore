@@ -33,7 +33,7 @@ public class ReservaController : ControllerBase
         }
     }
 
-    [HttpGet("usuario/{id}")]
+    [HttpGet("usuario")]
 
     public ActionResult<List<ReservaGetDTO>> GetReservasUsuario(int id)
     {
@@ -56,14 +56,15 @@ public class ReservaController : ControllerBase
             return StatusCode(500, new { message = "Ocurrió un error interno en el servidor." });
         }
     }
-    [HttpPost("{IdUser}")]
-    public IActionResult CreateReserva([FromBody] List<ReservaAddDTO> reservas)
+    
+    [HttpPost()]
+    public IActionResult CreateReserva([FromBody] List<ReservaAddDTO> user)
     {
         try
         {
             _logger.LogInformation("Se ha recibido una solicitud de creación de reservas.");
-            _reservaService.CreateReservas(reservas);
-            return Ok(reservas);
+            _reservaService.CreateReservas(user);
+            return Ok(user);
         }
         catch (Exception ex)
         {
@@ -72,7 +73,7 @@ public class ReservaController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut()]
     public IActionResult UpdateReserva(int id, [FromBody] ReservaPutDTO reserva)
     {
         try
@@ -98,7 +99,7 @@ public class ReservaController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete()]
     public IActionResult DeleteReserva(int id)
     {
         try

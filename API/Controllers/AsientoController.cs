@@ -33,7 +33,7 @@ public class AsientoController : ControllerBase
         }
     }
 
-    [HttpGet("estado/{estado}")]
+    [HttpGet("disponible")]
     public ActionResult<List<Asiento>> GetAllEstado(bool estado)
     {
         try
@@ -103,7 +103,7 @@ public class AsientoController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut()]
     public IActionResult UpdateAsiento(int id, [FromBody] Asiento asiento)
     {
         try
@@ -165,7 +165,7 @@ public class AsientoController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete()]
     public IActionResult DeleteAsiento(int id)
     {
         try
